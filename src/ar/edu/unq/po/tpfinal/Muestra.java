@@ -10,5 +10,6 @@ public class Muestra {
 	private Usuario usuarioRecolectador;
 	private List<Especie> opinionesRegulares = new ArrayList<Especie>();
 	private List<Especie> opinionesExpertas = new ArrayList<Especie>();
+	private Boolean estaVerificada = false;
 
 }
