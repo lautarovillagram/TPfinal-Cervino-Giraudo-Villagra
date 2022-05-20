@@ -3,7 +3,7 @@ package ar.edu.unq.po.tpfinal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario {
+public abstract class Usuario {
 
 	private List<Muestra> muestrasEnviadas = new ArrayList<Muestra>();
 	private List<Muestra> muestrasOpinadas = new ArrayList<Muestra>();
@@ -34,12 +34,16 @@ public class Usuario {
 	 */
 
 	public void opinarMuestra(Muestra muestraAOpinar, String especie) {
-		if (!muestraAOpinar.estaVerificada() && !this.esPropia(muestraAOpinar) && !this.yaOpino(muestraAOpinar)) {
-
-		} else {
-
+		if (this.puedeOpinarEn(muestraAOpinar)) {
+			this.opinar(muestraAOpinar, especie);
 		}
 
+	}
+
+	public abstract void opinar(Muestra muestra, String especie);
+
+	public boolean puedeOpinarEn(Muestra muestra) {
+		return !muestra.estaVerificada() && !this.esPropia(muestra) && !this.yaOpino(muestra);
 	}
 
 	public boolean esPropia(Muestra muestra) {

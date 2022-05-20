@@ -18,16 +18,16 @@ public class Muestra {
 		return opinionesRegulares;
 	}
 
-	public void setOpinionesRegulares(List<String> opinionesRegulares) {
-		this.opinionesRegulares = opinionesRegulares;
+	public void agregarOpinionRegular(String opinion) {
+		this.opinionesRegulares.add(opinion);
 	}
 
 	public List<String> getOpinionesExpertas() {
 		return opinionesExpertas;
 	}
 
-	public void setOpinionesExpertas(List<String> opinionesExpertas) {
-		this.opinionesExpertas = opinionesExpertas;
+	public void AgregarOpinionExperta(String opinion) {
+		this.opinionesExpertas.add(opinion);
 	}
 
 	public Muestra(String especie, Foto foto, Ubicacion ubicacion, Usuario usuarioRecolectador, Time fecha) {
