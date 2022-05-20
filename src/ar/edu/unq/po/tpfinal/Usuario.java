@@ -6,6 +6,7 @@ import java.util.List;
 public class Usuario {
 
 	List<Muestra> muestrasEnviadas = new ArrayList<Muestra>();
+	List<Muestra> muestrasOpinadas = new ArrayList<Muestra>();
 
 	public void enviarMuestra(Muestra muestraAEnviar) {
 		// TODO

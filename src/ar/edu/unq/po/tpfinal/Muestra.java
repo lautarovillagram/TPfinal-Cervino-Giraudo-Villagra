@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Muestra {
-	private Especie especie;
+	private String especie;
 	private Foto foto;
 	private Ubicacion ubicacion;
 	private Usuario usuarioRecolectador;
-	private List<Especie> opinionesRegulares = new ArrayList<Especie>();
-	private List<Especie> opinionesExpertas = new ArrayList<Especie>();
+	private List<String> opinionesRegulares = new ArrayList<String>();
+	private List<String> opinionesExpertas = new ArrayList<String>();
 	private Boolean estaVerificada = false;
 
 }
