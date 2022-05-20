@@ -7,4 +7,9 @@ public class UsuarioExperto extends Usuario {
 		muestra.AgregarOpinionExperta(especie);
 	}
 
+	@Override
+	public boolean puedeOpinarEn(Muestra muestra) {
+		return !muestra.estaVerificada();
+	}
+
 }

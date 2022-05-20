@@ -3,7 +3,7 @@ package ar.edu.unq.po.tpfinal;
 public class UsuarioRegular extends Usuario {
 
 	private boolean subioAExperto = false;
-	
+
 	public boolean isSubioAExperto() {
 		return subioAExperto;
 	}
@@ -15,10 +15,15 @@ public class UsuarioRegular extends Usuario {
 	@Override
 	public void opinar(Muestra muestra, String especie) {
 		if (this.isSubioAExperto()) {
-			muestra.AgregarOpinionExperta(especie); 
+			muestra.AgregarOpinionExperta(especie);
 		} else {
 			muestra.agregarOpinionRegular(especie);
 		}
+	}
+
+	@Override
+	public boolean puedeOpinarEn(Muestra muestra) {
+		return !(muestra.opinoUnExperto() || this.esPropiaOYaOpino(muestra));
 	}
 
 }

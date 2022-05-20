@@ -41,7 +41,12 @@ public class Muestra {
 	}
 
 	public boolean estaVerificada() {
-		return this.getOpinionesExpertas().size() >= 2;
+		// TODO
+		return true;
+	}
+
+	public boolean opinoUnExperto() {
+		return this.getOpinionesExpertas().size() >= 1;
 	}
 
 }

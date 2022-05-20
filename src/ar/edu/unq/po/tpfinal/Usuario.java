@@ -30,9 +30,10 @@ public abstract class Usuario {
 
 	/*
 	 * Permite opinar en una muestra siempre y cuando esta no haya sido verificada,
-	 * no sea propia del usuario y todavia no haya opinado
+	 * no sea propia del usuario y todavia no haya opinado, aplica template method (ponele)
 	 */
 
+		
 	public void opinarMuestra(Muestra muestraAOpinar, String especie) {
 		if (this.puedeOpinarEn(muestraAOpinar)) {
 			this.opinar(muestraAOpinar, especie);
@@ -42,9 +43,7 @@ public abstract class Usuario {
 
 	public abstract void opinar(Muestra muestra, String especie);
 
-	public boolean puedeOpinarEn(Muestra muestra) {
-		return !muestra.estaVerificada() && !this.esPropia(muestra) && !this.yaOpino(muestra);
-	}
+	public abstract boolean puedeOpinarEn(Muestra muestra);
 
 	public boolean esPropia(Muestra muestra) {
 		return this.getMuestrasEnviadas().contains(muestra);
@@ -52,5 +51,9 @@ public abstract class Usuario {
 
 	public boolean yaOpino(Muestra muestra) {
 		return this.getMuestrasOpinadas().contains(muestra);
+	}
+	
+	public boolean esPropiaOYaOpino(Muestra muestra) {
+		return this.esPropia(muestra) || this.yaOpino(muestra);
 	}
 }
