@@ -42,6 +42,11 @@ public abstract class Usuario {
 
 	public abstract void opinar(Muestra muestra, String especie);
 
+	/*
+	 * verifica que la muestra que se quiere opinar no este verificada, no sea
+	 * propia o ya la haya opinado
+	 */
+
 	public boolean puedeOpinarEn(Muestra muestra) {
 		return !muestra.estaVerificada() && !this.esPropia(muestra) && !this.yaOpino(muestra);
 	}
@@ -50,6 +55,9 @@ public abstract class Usuario {
 		return this.getMuestrasEnviadas().contains(muestra);
 	}
 
+	/*
+	 * Verifica que el usuario no este opinando dos veces en la misma muestra
+	 */
 	public boolean yaOpino(Muestra muestra) {
 		return this.getMuestrasOpinadas().stream().anyMatch(o -> o.getMuestraOpinada() == muestra);
 	}
