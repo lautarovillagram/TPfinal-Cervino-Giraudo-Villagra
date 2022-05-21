@@ -4,31 +4,32 @@ import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Muestra {
 	private String especie;
 	private Foto foto;
 	private Ubicacion ubicacion;
 	private Usuario usuarioRecolectador;
-	private List<String> opinionesRegulares = new ArrayList<String>();
-	private List<String> opinionesExpertas = new ArrayList<String>();
+	private List<Opinion> opiniones = new ArrayList<Opinion>();
+	// private List<String> opinionesExpertas = new ArrayList<String>();
 	private LocalDateTime fecha;
 
-	public List<String> getOpinionesRegulares() {
-		return opinionesRegulares;
+	public List<Opinion> getOpiniones() {
+		return opiniones;
 	}
 
-	public void agregarOpinionRegular(String opinion) {
-		this.opinionesRegulares.add(opinion);
+	public void agregarOpinion(Opinion opinion) {
+		this.opiniones.add(opinion);
 	}
 
-	public List<String> getOpinionesExpertas() {
-		return opinionesExpertas;
-	}
-
-	public void AgregarOpinionExperta(String opinion) {
-		this.opinionesExpertas.add(opinion);
-	}
+	/*
+	 * public List<String> getOpinionesExpertas() { return opinionesExpertas; }
+	 * 
+	 * public void AgregarOpinionExperta(String opinion) {
+	 * this.opinionesExpertas.add(opinion); }
+	 * 
+	 */
 
 	public Muestra(String especie, Foto foto, Ubicacion ubicacion, Usuario usuarioRecolectador, Time fecha) {
 		super();
@@ -42,11 +43,16 @@ public class Muestra {
 
 	public boolean estaVerificada() {
 		// TODO
-		return true;
+		return false;
 	}
 
 	public boolean opinoUnExperto() {
-		return this.getOpinionesExpertas().size() >= 1;
+		return this.opinionesDeExpertos().size() >= 1;
+
+	}
+
+	public List<Opinion> opinionesDeExpertos() {
+		return this.getOpiniones().stream().filter(o -> o.esOpinionExperta()).toList();
 	}
 
 }

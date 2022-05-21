@@ -6,22 +6,22 @@ import java.util.List;
 public abstract class Usuario {
 
 	private List<Muestra> muestrasEnviadas = new ArrayList<Muestra>();
-	private List<Muestra> muestrasOpinadas = new ArrayList<Muestra>();
+	private List<Opinion> opinionesEnviadas = new ArrayList<Opinion>();
 
 	public List<Muestra> getMuestrasEnviadas() {
 		return muestrasEnviadas;
 	}
 
-	public void setMuestrasEnviadas(List<Muestra> muestrasEnviadas) {
-		this.muestrasEnviadas = muestrasEnviadas;
+	public void agregarMuestraEnviada(Muestra muestra) {
+		this.muestrasEnviadas.add(muestra);
 	}
 
-	public List<Muestra> getMuestrasOpinadas() {
-		return muestrasOpinadas;
+	public List<Opinion> getMuestrasOpinadas() {
+		return opinionesEnviadas;
 	}
 
-	public void setMuestrasOpinadas(List<Muestra> muestrasOpinadas) {
-		this.muestrasOpinadas = muestrasOpinadas;
+	public void agregarOpinionEnviada(Opinion opinion) {
+		this.opinionesEnviadas.add(opinion);
 	}
 
 	public void enviarMuestra(Muestra muestraAEnviar) {
@@ -30,10 +30,9 @@ public abstract class Usuario {
 
 	/*
 	 * Permite opinar en una muestra siempre y cuando esta no haya sido verificada,
-	 * no sea propia del usuario y todavia no haya opinado, aplica template method (ponele)
+	 * no sea propia del usuario y todavia no haya opinado
 	 */
 
-		
 	public void opinarMuestra(Muestra muestraAOpinar, String especie) {
 		if (this.puedeOpinarEn(muestraAOpinar)) {
 			this.opinar(muestraAOpinar, especie);
@@ -43,17 +42,16 @@ public abstract class Usuario {
 
 	public abstract void opinar(Muestra muestra, String especie);
 
-	public abstract boolean puedeOpinarEn(Muestra muestra);
+	public boolean puedeOpinarEn(Muestra muestra) {
+		return !muestra.estaVerificada() && !this.esPropia(muestra) && !this.yaOpino(muestra);
+	}
 
 	public boolean esPropia(Muestra muestra) {
 		return this.getMuestrasEnviadas().contains(muestra);
 	}
 
 	public boolean yaOpino(Muestra muestra) {
-		return this.getMuestrasOpinadas().contains(muestra);
+		return this.getMuestrasOpinadas().stream().anyMatch(o -> o.getMuestraOpinada() == muestra);
 	}
-	
-	public boolean esPropiaOYaOpino(Muestra muestra) {
-		return this.esPropia(muestra) || this.yaOpino(muestra);
-	}
+
 }
