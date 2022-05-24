@@ -3,7 +3,12 @@ package ar.edu.unq.po.tpfinal;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Muestra {
@@ -52,7 +57,41 @@ public class Muestra {
 	}
 
 	public List<Opinion> opinionesDeExpertos() {
-		return this.getOpiniones().stream().filter(o -> o.esOpinionExperta()).toList();
+		return this.getOpiniones().stream().filter(o -> o.esOpinionExperta()).collect(Collectors.toList());
+	}
+	
+	public String resultadoActual() {
+		// Agrego las especies de cada opinion a un arraylist
+		List<String> especies = new ArrayList<>();
+		this.getOpiniones().forEach(o -> {especies.add(o.getEspecie()); });
+		
+		// Agrego las posibles opiniones distintas a un set para no tener repetidos
+		HashSet<String> posiblesOpiniones = new HashSet<>(especies);
+		
+		// Creo un map con cada especie como clave y su cantidad de votos como valor
+		Map<String, Integer> opinionesXcant = new HashMap<>();
+		posiblesOpiniones.forEach(e -> {opinionesXcant.put(e, Collections.frequency(especies, e)); });
+		
+		if (hayEmpate(opinionesXcant)) {
+			return "No definido";
+		}
+		else {
+			String resultado = "";
+			int value = 0;
+			for (Map.Entry<String, Integer> me : opinionesXcant.entrySet()) {
+				if(me.getValue() > value) {
+					value = me.getValue();
+					resultado = me.getKey();
+				}
+			}
+			return resultado;
+		}
 	}
 
+	private boolean hayEmpate(Map<String, Integer> opiniones) {
+		// Obtengo el mayor numero de votos del map
+		int maxNumeroVotos = Collections.max(opiniones.values());
+		// Si hay mas de 1 opinion con la mayor cantidad de votos hay empate
+		return opiniones.entrySet().stream().filter(me->me.getValue()==maxNumeroVotos).count() > 1;
+	}
 }

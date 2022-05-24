@@ -30,5 +30,8 @@ public class Opinion {
 	public void setEsOpinionExperta(boolean esOpinionExperta) {
 		this.esOpinionExperta = esOpinionExperta;
 	}
-
+	
+	public String getEspecie() {
+		return this.especie;
+	}
 }
