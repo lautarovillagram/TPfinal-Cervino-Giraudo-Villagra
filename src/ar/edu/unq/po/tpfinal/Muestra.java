@@ -1,9 +1,7 @@
 package ar.edu.unq.po.tpfinal;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,14 +34,17 @@ public class Muestra {
 	 * 
 	 */
 
-	public Muestra(String especie, Foto foto, Ubicacion ubicacion, Usuario usuarioRecolectador, Time fecha) {
+	public Muestra(String especie, Foto foto, Ubicacion ubicacion, Usuario usuarioRecolectador, LocalDateTime fecha) {
 		super();
 		this.especie = especie;
 		this.foto = foto;
 		this.ubicacion = ubicacion;
 		this.usuarioRecolectador = usuarioRecolectador;
 		this.fecha = LocalDateTime.now();
-
+		
+		// La opinion del usuario recolectador tambien debe tenerse en cuenta
+		this.usuarioRecolectador.opinarMuestra(this, this.especie);
+		//this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha, this.especie, this.usuarioRecolectador.esExperto()));
 	}
 
 	public boolean estaVerificada() {
