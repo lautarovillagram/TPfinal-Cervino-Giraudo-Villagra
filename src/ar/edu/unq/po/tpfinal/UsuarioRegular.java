@@ -28,9 +28,9 @@ public class UsuarioRegular extends Usuario {
 	@Override
 	public boolean puedeOpinarEn(Muestra muestra) {
 		if (this.subioAExperto) {
-			return !muestra.estaVerificada();
+			return !muestra.estaVerificada() && !this.yaOpino(muestra) && !this.esPropia(muestra);
 		} else {
-			return !(this.esPropia(muestra) || this.yaOpino(muestra));
+			return !muestra.opinoUnExperto() && !this.yaOpino(muestra) && !this.esPropia(muestra);
 		}
 	}
 

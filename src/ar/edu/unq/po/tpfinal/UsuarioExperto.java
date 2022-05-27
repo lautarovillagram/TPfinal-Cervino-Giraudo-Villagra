@@ -14,6 +14,6 @@ public class UsuarioExperto extends Usuario {
 
 	@Override
 	public boolean puedeOpinarEn(Muestra muestra) {
-		return muestra.estaVerificada();
+		return !muestra.estaVerificada() && !this.yaOpino(muestra) && !this.esPropia(muestra);
 	}
 }

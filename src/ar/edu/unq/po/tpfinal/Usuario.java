@@ -47,9 +47,7 @@ public abstract class Usuario {
 	 * propia o ya la haya opinado
 	 */
 
-	public boolean puedeOpinarEn(Muestra muestra) {
-		return !muestra.estaVerificada() && !this.esPropia(muestra) && !this.yaOpino(muestra);
-	}
+	public abstract boolean puedeOpinarEn(Muestra muestra);
 
 	public boolean esPropia(Muestra muestra) {
 		return this.getMuestrasEnviadas().contains(muestra);
