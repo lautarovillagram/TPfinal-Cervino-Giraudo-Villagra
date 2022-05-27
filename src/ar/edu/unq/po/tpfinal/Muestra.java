@@ -52,6 +52,7 @@ public class Muestra {
 		return false;
 	}
 
+	
 	public boolean opinoUnExperto() {
 		return this.opinionesDeExpertos().size() >= 1;
 

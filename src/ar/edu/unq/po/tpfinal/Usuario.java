@@ -24,6 +24,7 @@ public abstract class Usuario {
 		this.opinionesEnviadas.add(opinion);
 	}
 
+	//creo que esto no va a servir para nada pero por las dudas lo dejamos aca
 	public void enviarMuestra(Muestra muestraAEnviar) {
 		// TODO
 	}
@@ -40,12 +41,8 @@ public abstract class Usuario {
 
 	}
 
+	
 	public abstract void opinar(Muestra muestra, String especie);
-
-	/*
-	 * verifica que la muestra que se quiere opinar no este verificada, no sea
-	 * propia o ya la haya opinado
-	 */
 
 	public abstract boolean puedeOpinarEn(Muestra muestra);
 

@@ -25,6 +25,12 @@ public class UsuarioRegular extends Usuario {
 		}
 	}
 
+	/*
+	 * verifica que, en caso de ser experto, la muestra no este verificada, el usuario no haya opinado
+	 * sobre la misma, y que no sea propia
+	 * en caso de no ser experto, verifica que la muestra no haya sido opinada por un experto, que no
+	 * haya opinado sobre la misma, y que no sea propia
+	 */
 	@Override
 	public boolean puedeOpinarEn(Muestra muestra) {
 		if (this.subioAExperto) {
