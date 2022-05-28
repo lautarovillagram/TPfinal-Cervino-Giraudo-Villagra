@@ -7,11 +7,17 @@ import static org.mockito.Mockito.*;
 
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MuestraTestCase {
 	private Muestra muestra;
 	private Usuario u;
 	private Usuario u2;
+	private Usuario u3;
+	private Usuario u4;
 	
 	@BeforeEach
 	public void setUp() {
@@ -23,6 +29,9 @@ public class MuestraTestCase {
 		
 		u  = new UsuarioRegular();
 		u2 = new UsuarioRegular();
+		
+		u3 = new UsuarioExperto();
+		u4 = new UsuarioExperto();
 	}
 	
 	@Test
@@ -32,8 +41,8 @@ public class MuestraTestCase {
 	
 	@Test
 	public void testSiHayEmpateEnLasOpinionesDeUnaMuestraElResultadoEsNoDefinido() {
-		u.opinar(muestra, "Chinche Foliada");
-		u2.opinar(muestra, "Phtia-Chinche");
+		u.opinarMuestra(muestra, "Chinche Foliada");
+		u2.opinarMuestra(muestra, "Phtia-Chinche");
 		
 		assertEquals("No definido", muestra.resultadoActual());
 	}
@@ -46,4 +55,26 @@ public class MuestraTestCase {
 		assertEquals("Vinchuca Infestans", muestra.resultadoActual());
 	}
 	
+	@Test
+	public void testUnaMuestraSinOpinionesDeExpertosNoEstaVerificada() {
+		u.opinarMuestra(muestra, "Chinche Foliada");
+		
+		assertFalse(muestra.estaVerificada());
+	}
+	
+	@Test
+	public void testUnaMuestraConOpinionesDeExpertosQueNoCoincidenNoEstaVerificada() {
+		u3.opinarMuestra(muestra, "Chinche Foliada");
+		u4.opinarMuestra(muestra, "Vinchuca Infestans");
+		
+		assertFalse(muestra.estaVerificada());
+	}
+	
+	@Test
+	public void testUnaMuestraConOpinionesDeExpertosQueCoincidenEstaVerificada() {
+		u3.opinarMuestra(muestra, "Chinche Foliada");
+		u4.opinarMuestra(muestra, "Chinche Foliada");
+		
+		assertTrue(muestra.estaVerificada());
+	}
 }

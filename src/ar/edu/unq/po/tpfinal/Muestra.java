@@ -46,13 +46,21 @@ public class Muestra {
 		this.usuarioRecolectador.opinarMuestra(this, this.especie);
 		//this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha, this.especie, this.usuarioRecolectador.esExperto()));
 	}
-
+	
+	// Indica si al menos 2 usuarios expertos tienen la misma opinion
 	public boolean estaVerificada() {
-		// TODO
+		List<String> especiesOpinionesExpertas = this.opinionesDeExpertos().stream().map(o-> o.getEspecie()).collect(Collectors.toList());
+		
+		HashSet<String> posiblesOpiniones = new HashSet<>(especiesOpinionesExpertas);
+		
+		for(String e: posiblesOpiniones) {
+			if (Collections.frequency(especiesOpinionesExpertas, e) >= 2) {
+				return true;
+			};
+		}
 		return false;
 	}
 
-	
 	public boolean opinoUnExperto() {
 		return this.opinionesDeExpertos().size() >= 1;
 
