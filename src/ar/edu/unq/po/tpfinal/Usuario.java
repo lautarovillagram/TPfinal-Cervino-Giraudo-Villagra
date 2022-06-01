@@ -8,6 +8,16 @@ public abstract class Usuario {
 	private List<Muestra> muestrasEnviadas = new ArrayList<Muestra>();
 	private List<Opinion> opinionesEnviadas = new ArrayList<Opinion>();
 
+	private ActualizadorDeCategoria observador;
+
+	public ActualizadorDeCategoria getObservador() {
+		return observador;
+	}
+
+	public void setObservador(ActualizadorDeCategoria observador) {
+		this.observador = observador;
+	}
+
 	public List<Muestra> getMuestrasEnviadas() {
 		return muestrasEnviadas;
 	}
@@ -24,7 +34,7 @@ public abstract class Usuario {
 		this.opinionesEnviadas.add(opinion);
 	}
 
-	//creo que esto no va a servir para nada pero por las dudas lo dejamos aca
+	// creo que esto no va a servir para nada pero por las dudas lo dejamos aca
 	public void enviarMuestra(Muestra muestraAEnviar) {
 		// TODO
 	}
@@ -41,7 +51,6 @@ public abstract class Usuario {
 
 	}
 
-	
 	public abstract void opinar(Muestra muestra, String especie);
 
 	public abstract boolean puedeOpinarEn(Muestra muestra);

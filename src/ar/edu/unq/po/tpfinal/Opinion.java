@@ -11,6 +11,15 @@ public class Opinion {
 
 	private Usuario usuarioOpinador;
 	private LocalDateTime fecha;
+
+	public LocalDateTime getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(LocalDateTime fecha) {
+		this.fecha = fecha;
+	}
+
 	private String especie;
 	private boolean esOpinionExperta;
 
@@ -30,8 +39,12 @@ public class Opinion {
 	public void setEsOpinionExperta(boolean esOpinionExperta) {
 		this.esOpinionExperta = esOpinionExperta;
 	}
-	
+
 	public String getEspecie() {
 		return this.especie;
+	}
+
+	public boolean tieneMenosDe30Dias() {
+		return this.getFecha().isAfter(this.getFecha().minusDays(30));
 	}
 }

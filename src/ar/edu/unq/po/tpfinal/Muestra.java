@@ -18,6 +18,14 @@ public class Muestra {
 	// private List<String> opinionesExpertas = new ArrayList<String>();
 	private LocalDateTime fecha;
 
+	public LocalDateTime getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(LocalDateTime fecha) {
+		this.fecha = fecha;
+	}
+
 	public List<Opinion> getOpiniones() {
 		return opiniones;
 	}
@@ -103,5 +111,10 @@ public class Muestra {
 		int maxNumeroVotos = Collections.max(opiniones.values());
 		// Si hay mas de 1 opinion con la mayor cantidad de votos hay empate
 		return opiniones.entrySet().stream().filter(me->me.getValue()==maxNumeroVotos).count() > 1;
+	}
+	
+	
+	public boolean tieneMenosDe30Dias() {
+		return this.getFecha().isAfter(this.getFecha().minusDays(30));
 	}
 }

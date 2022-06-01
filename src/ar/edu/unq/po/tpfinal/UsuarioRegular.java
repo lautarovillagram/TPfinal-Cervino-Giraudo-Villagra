@@ -2,7 +2,12 @@ package ar.edu.unq.po.tpfinal;
 
 import java.time.LocalDateTime;
 
-public class UsuarioRegular extends Usuario {
+public class UsuarioRegular extends Usuario implements Observable {
+	private ActualizadorDeCategoria observador;
+
+	public ActualizadorDeCategoria getObservador() {
+		return observador;
+	}
 
 	private boolean subioAExperto = false;
 
@@ -20,15 +25,30 @@ public class UsuarioRegular extends Usuario {
 		if (this.puedeOpinarEn(muestra)) {
 			this.agregarOpinionEnviada(opinion);
 			muestra.agregarOpinion(opinion);
+			this.notificar();
 		} else {
 
 		}
 	}
 
+	public void attach(ActualizadorDeCategoria observer) {
+		this.setObservador(observer);
+
+	}
+
+	public void dettach() {
+		this.setObservador(null);
+	}
+
+	public void notificar() {
+		this.getObservador().actualizar();
+
+	}
+
 	/*
-	 * verifica que, en caso de ser experto, la muestra no este verificada, el usuario no haya opinado
-	 * sobre la misma, y que no sea propia
-	 * en caso de no ser experto, verifica que la muestra no haya sido opinada por un experto, que no
+	 * verifica que, en caso de ser experto, la muestra no este verificada, el
+	 * usuario no haya opinado sobre la misma, y que no sea propia en caso de no ser
+	 * experto, verifica que la muestra no haya sido opinada por un experto, que no
 	 * haya opinado sobre la misma, y que no sea propia
 	 */
 	@Override
