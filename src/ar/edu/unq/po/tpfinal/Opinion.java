@@ -5,12 +5,14 @@ import java.time.LocalDateTime;
 public class Opinion {
 	private Muestra muestraOpinada;
 
+	private Usuario usuarioOpinador;
+	private LocalDateTime fecha;
+	private String especie;
+	private boolean esOpinionExperta;
+
 	public Muestra getMuestraOpinada() {
 		return muestraOpinada;
 	}
-
-	private Usuario usuarioOpinador;
-	private LocalDateTime fecha;
 
 	public LocalDateTime getFecha() {
 		return fecha;
@@ -20,15 +22,12 @@ public class Opinion {
 		this.fecha = fecha;
 	}
 
-	private String especie;
-	private boolean esOpinionExperta;
-
-	public Opinion(Muestra muestraAOpinar, Usuario usuarioOpinador, LocalDateTime fecha, String especie,
+	public Opinion(Muestra muestraAOpinar, Usuario usuarioOpinador, LocalDateTime fecha, String tipo,
 			boolean esOpinionExperta) {
 		this.muestraOpinada = muestraAOpinar;
 		this.usuarioOpinador = usuarioOpinador;
 		this.fecha = fecha;
-		this.especie = especie;
+		this.especie = tipo;
 		this.esOpinionExperta = esOpinionExperta;
 	}
 

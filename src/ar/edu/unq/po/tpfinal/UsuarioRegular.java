@@ -9,6 +9,10 @@ public class UsuarioRegular extends Usuario implements Observable {
 		return observador;
 	}
 
+	public void setObservador(ActualizadorDeCategoria observer) {
+		this.observador = observer;
+	}
+
 	private boolean subioAExperto = false;
 
 	public boolean isSubioAExperto() {
@@ -29,15 +33,14 @@ public class UsuarioRegular extends Usuario implements Observable {
 		} else {
 
 		}
-	}
-
-	public void attach(ActualizadorDeCategoria observer) {
-		this.setObservador(observer);
 
 	}
 
-	public void dettach() {
-		this.setObservador(null);
+	@Override
+	public void enviarMuestra(Muestra muestraAEnviar) {
+		this.agregarMuestraEnviada(muestraAEnviar);
+		this.notificar();
+	
 	}
 
 	public void notificar() {
