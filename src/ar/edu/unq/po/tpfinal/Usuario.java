@@ -28,6 +28,8 @@ public abstract class Usuario {
 	// verifica que la especie ingresada es una categoria valida, seguramente haya
 	// una manera mas eficiente
 	// de hacer esto pero ahora lo unico que se me ocurre es asi
+	// agrega la muestra cargada a una lista donde estan todas las muestras que
+	// envió
 
 	public void cargarMuestra(String especie, Foto foto, Usuario usuarioRecolector, Ubicacion ubicacionActual) {
 		Especies especies = new Especies();
@@ -45,7 +47,8 @@ public abstract class Usuario {
 
 	/*
 	 * Permite opinar en una muestra siempre y cuando esta no haya sido verificada,
-	 * no sea propia del usuario y todavia no haya opinado
+	 * no sea propia del usuario y todavia no haya opinado. tambien se asegura de
+	 * que la especie existe
 	 */
 
 	public void opinarMuestra(Muestra muestraAOpinar, String especie) {
