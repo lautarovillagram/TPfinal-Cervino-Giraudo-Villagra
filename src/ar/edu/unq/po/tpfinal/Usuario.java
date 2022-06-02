@@ -25,11 +25,12 @@ public abstract class Usuario {
 		this.opinionesEnviadas.add(opinion);
 	}
 
-	// verifica que la especie ingresada es una categoria valida, seguramente haya
-	// una manera mas eficiente
-	// de hacer esto pero ahora lo unico que se me ocurre es asi
-	// agrega la muestra cargada a una lista donde estan todas las muestras que
-	// envió
+	/*
+	 * verifica que la especie ingresada es una categoria valida, seguramente haya
+	 * una manera mas eficiente de hacer esto pero ahora lo unico que se me ocurre
+	 * es asi agrega la muestra cargada a una lista donde estan todas las muestras
+	 * que envió
+	 */
 
 	public void cargarMuestra(String especie, Foto foto, Usuario usuarioRecolector, Ubicacion ubicacionActual) {
 		Especies especies = new Especies();
