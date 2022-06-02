@@ -49,8 +49,11 @@ public abstract class Usuario {
 	 */
 
 	public void opinarMuestra(Muestra muestraAOpinar, String especie) {
-		if (this.puedeOpinarEn(muestraAOpinar)) {
+		Especies especies = new Especies();
+		if (this.puedeOpinarEn(muestraAOpinar) && especies.esUnaCategoria(especie)) {
 			this.opinar(muestraAOpinar, especie);
+		} else {
+			System.out.println("El usuario no puede opinar o la categoria es invalida");
 		}
 
 	}

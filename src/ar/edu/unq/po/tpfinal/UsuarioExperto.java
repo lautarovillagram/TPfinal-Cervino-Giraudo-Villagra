@@ -6,6 +6,7 @@ public class UsuarioExperto extends Usuario {
 
 	@Override
 	public void opinar(Muestra muestra, String especie) {
+
 		Opinion opinion = new Opinion(muestra, this, LocalDateTime.now(), especie, true);
 		this.agregarOpinionEnviada(opinion);
 		muestra.agregarOpinion(opinion);

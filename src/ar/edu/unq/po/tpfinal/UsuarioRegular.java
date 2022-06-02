@@ -25,14 +25,11 @@ public class UsuarioRegular extends Usuario implements Observable {
 
 	@Override
 	public void opinar(Muestra muestra, String especie) {
-		Opinion opinion = new Opinion(muestra, this, LocalDateTime.now(), especie, this.isSubioAExperto());
-		if (this.puedeOpinarEn(muestra)) {
-			this.agregarOpinionEnviada(opinion);
-			muestra.agregarOpinion(opinion);
-			this.notificar();
-		} else {
 
-		}
+		Opinion opinion = new Opinion(muestra, this, LocalDateTime.now(), especie, this.isSubioAExperto());
+		this.agregarOpinionEnviada(opinion);
+		muestra.agregarOpinion(opinion);
+		this.notificar();
 
 	}
 
@@ -40,7 +37,7 @@ public class UsuarioRegular extends Usuario implements Observable {
 	public void enviarMuestra(Muestra muestraAEnviar) {
 		this.agregarMuestraEnviada(muestraAEnviar);
 		this.notificar();
-	
+
 	}
 
 	public void notificar() {
