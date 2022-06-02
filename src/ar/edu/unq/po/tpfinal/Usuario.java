@@ -1,5 +1,6 @@
 package ar.edu.unq.po.tpfinal;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,16 +8,6 @@ public abstract class Usuario {
 
 	private List<Muestra> muestrasEnviadas = new ArrayList<Muestra>();
 	private List<Opinion> opinionesEnviadas = new ArrayList<Opinion>();
-
-	private ActualizadorDeCategoria observador;
-
-	public ActualizadorDeCategoria getObservador() {
-		return observador;
-	}
-
-	public void setObservador(ActualizadorDeCategoria observador) {
-		this.observador = observador;
-	}
 
 	public List<Muestra> getMuestrasEnviadas() {
 		return muestrasEnviadas;
@@ -34,9 +25,22 @@ public abstract class Usuario {
 		this.opinionesEnviadas.add(opinion);
 	}
 
-	// creo que esto no va a servir para nada pero por las dudas lo dejamos aca
+	// verifica que la especie ingresada es una categoria valida, seguramente haya
+	// una manera mas eficiente
+	// de hacer esto pero ahora lo unico que se me ocurre es asi
+
+	public void cargarMuestra(String especie, Foto foto, Usuario usuarioRecolector, Ubicacion ubicacionActual) {
+		Especies especies = new Especies();
+		if (especies.esUnaCategoria(especie)) {
+			this.enviarMuestra(new Muestra(especie, foto, ubicacionActual, this, LocalDateTime.now()));
+		} else {
+			System.out.println("la categoria no es valida");
+		}
+
+	}
+
 	public void enviarMuestra(Muestra muestraAEnviar) {
-		// TODO
+		this.agregarMuestraEnviada(muestraAEnviar);
 	}
 
 	/*

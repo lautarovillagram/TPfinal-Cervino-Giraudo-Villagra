@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Especies {
 
-	private List<String> categorias = Arrays.asList("infestans", "sordida", "guasayana", "chinche foliada",
+	private List<String> categorias = Arrays.asList("Vinchuca Infestans", "Vinchuca Sordida", "Vinchuca Guasayana", "chinche foliada",
 			"phtia-chinche", "ninguna", "imagen poco clara");
 
 	public List<String> getCategorias() {
