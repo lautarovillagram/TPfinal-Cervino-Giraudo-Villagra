@@ -9,11 +9,11 @@ public class UsuarioRegular extends Usuario implements Observable {
 		return observador;
 	}
 
+	private boolean subioAExperto = false;
+
 	public void setObservador(ActualizadorDeCategoria observer) {
 		this.observador = observer;
 	}
-
-	private boolean subioAExperto = false;
 
 	public boolean isSubioAExperto() {
 		return subioAExperto;

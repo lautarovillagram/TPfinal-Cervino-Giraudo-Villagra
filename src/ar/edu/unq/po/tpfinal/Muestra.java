@@ -14,6 +14,10 @@ public class Muestra {
 	private Foto foto;
 	private Ubicacion ubicacion;
 	private Usuario usuarioRecolectador;
+	public Usuario getUsuarioRecolectador() {
+		return usuarioRecolectador;
+	}
+
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	// private List<String> opinionesExpertas = new ArrayList<String>();
 	private LocalDateTime fecha;
@@ -52,7 +56,7 @@ public class Muestra {
 		this.fecha = LocalDateTime.now();
 
 		// La opinion del usuario recolectador tambien debe tenerse en cuenta
-		this.usuarioRecolectador.opinarMuestra(this, this.especie);
+		this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this, especie);
 		// this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha,
 		// this.especie, this.usuarioRecolectador.esExperto()));
 	}
@@ -121,6 +125,6 @@ public class Muestra {
 	}
 
 	public boolean tieneMenosDe30Dias() {
-		return this.getFecha().isAfter(this.getFecha().minusDays(30));
+		return this.getFecha().isAfter(LocalDateTime.now().minusDays(30));
 	}
 }

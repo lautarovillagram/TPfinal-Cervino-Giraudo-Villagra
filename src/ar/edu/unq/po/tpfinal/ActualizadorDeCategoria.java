@@ -13,6 +13,12 @@ public class ActualizadorDeCategoria implements Observer {
 		this.observable = observable;
 	}
 
+	/*
+	 * verifica la cantidad de muestras enviadas y opiniones enviadas, si 10
+	 * muestras y 20 opiniones fueron enviadas en menos de 30 dias, cambia la
+	 * categoria de usuario regular a experto
+	 */
+
 	public void actualizar() {
 		List<Muestra> muestrasEnviadasLosUltimos30Dias = this.getObservable().getMuestrasEnviadas().stream()
 				.filter(s -> s.tieneMenosDe30Dias()).toList();

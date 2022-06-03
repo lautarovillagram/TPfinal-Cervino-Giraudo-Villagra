@@ -22,6 +22,9 @@ public class Opinion {
 		this.fecha = fecha;
 	}
 
+	/*
+	 * constructor para la opinion de los usuarios regulares
+	 */
 	public Opinion(Muestra muestraAOpinar, Usuario usuarioOpinador, LocalDateTime fecha, String tipo,
 			boolean esOpinionExperta) {
 		this.muestraOpinada = muestraAOpinar;
@@ -29,6 +32,17 @@ public class Opinion {
 		this.fecha = fecha;
 		this.especie = tipo;
 		this.esOpinionExperta = esOpinionExperta;
+	}
+
+	/*
+	 * constructor para la opinion de los usuarios expertos
+	 */
+	public Opinion(Muestra muestraAOpinar, Usuario usuarioOpinador, LocalDateTime fecha, String tipo) {
+		this.muestraOpinada = muestraAOpinar;
+		this.usuarioOpinador = usuarioOpinador;
+		this.fecha = fecha;
+		this.especie = tipo;
+		this.esOpinionExperta = true;
 	}
 
 	public boolean esOpinionExperta() {
@@ -44,6 +58,6 @@ public class Opinion {
 	}
 
 	public boolean tieneMenosDe30Dias() {
-		return this.getFecha().isAfter(this.getFecha().minusDays(30));
+		return this.getFecha().isAfter(LocalDateTime.now().minusDays(30));
 	}
 }

@@ -32,7 +32,7 @@ public abstract class Usuario {
 	 * que envió
 	 */
 
-	public void cargarMuestra(String especie, Foto foto, Usuario usuarioRecolector, Ubicacion ubicacionActual) {
+	public void cargarMuestra(String especie, Foto foto, Ubicacion ubicacionActual) {
 		Especies especies = new Especies();
 		if (especies.esUnaCategoria(especie)) {
 			this.enviarMuestra(new Muestra(especie, foto, ubicacionActual, this, LocalDateTime.now()));
@@ -60,6 +60,15 @@ public abstract class Usuario {
 			System.out.println("El usuario no puede opinar o la categoria es invalida");
 		}
 
+	}
+	
+	public void agregarOpinionAMuestraPropia(Muestra muestraAOpinar, String especie) {
+		Especies especies = new Especies();
+		if (especies.getCategorias().contains(especie)) {
+			this.opinar(muestraAOpinar, especie);
+		} else {
+			System.out.println("la categoria es invalida");
+		}
 	}
 
 	public abstract void opinar(Muestra muestra, String especie);
