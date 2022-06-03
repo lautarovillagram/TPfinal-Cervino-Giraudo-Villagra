@@ -7,10 +7,6 @@ import static org.mockito.Mockito.*;
 
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class MuestraTestCase {
 	private Muestra muestra;
