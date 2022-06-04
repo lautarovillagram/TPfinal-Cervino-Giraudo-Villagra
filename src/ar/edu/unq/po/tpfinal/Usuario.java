@@ -61,7 +61,7 @@ public abstract class Usuario {
 		}
 
 	}
-	
+
 	public void agregarOpinionAMuestraPropia(Muestra muestraAOpinar, String especie) {
 		Especies especies = new Especies();
 		if (especies.getCategorias().contains(especie)) {

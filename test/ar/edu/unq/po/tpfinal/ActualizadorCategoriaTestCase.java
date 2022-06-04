@@ -40,20 +40,24 @@ public class ActualizadorCategoriaTestCase {
 	private Opinion opinion18;
 	private Opinion opinion19;
 	private Opinion opinion20;
+	private Opinion opinion21;
 	private ActualizadorDeCategoria observer;
 
 	private UsuarioRegular u;
 	private UsuarioRegular u2;
 
+	/*
+	 * el setup agrega 9 muestras con menos de 30 dias de antiguedad y 1 con mas de
+	 * 30 dias de antiguedad, tambien 19 opiniones con menos de 30 dias de
+	 * antiguedad y 1 con mas de 30 dias de antiguedad
+	 */
 	@BeforeEach
 	public void SetUp() {
 		LocalDateTime fecha = LocalDateTime.now().minusDays(7);
-		LocalDateTime fecha2 = LocalDateTime.now().minusDays(60);
+		LocalDateTime fecha2 = LocalDateTime.now().minusDays(90);
 		Ubicacion ubicacion = mock(Ubicacion.class);
 		Foto foto = mock(Foto.class);
-		UsuarioRegular u2 = mock(UsuarioRegular.class);
 		Muestra muestraAjena = mock(Muestra.class);
-		Muestra muestraAjena2 = mock(Muestra.class);
 		ActualizadorDeCategoria observador = new ActualizadorDeCategoria();
 		u = new UsuarioRegular();
 		u.setObservador(observador);
@@ -89,6 +93,8 @@ public class ActualizadorCategoriaTestCase {
 		opinion17 = new Opinion(muestraAjena, u, fecha, "Vinchuca Infestans", false);
 		opinion18 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
 		opinion19 = new Opinion(muestraAjena, u, fecha, "imagen poco clara", false);
+		opinion20 = new Opinion(muestraAjena, u, fecha, "chinche foliada", false);
+		opinion21 = new Opinion(muestraAjena, u, fecha2, "imagen poco clara", false);
 
 		u.agregarMuestraEnviada(muestra);
 		u.agregarMuestraEnviada(muestra2);
@@ -99,7 +105,8 @@ public class ActualizadorCategoriaTestCase {
 		u.agregarMuestraEnviada(muestra7);
 		u.agregarMuestraEnviada(muestra8);
 		u.agregarMuestraEnviada(muestra9);
-		u.agregarMuestraEnviada(muestra10);
+		// u.agregarMuestraEnviada(muestra10);
+		u.agregarMuestraEnviada(muestra11);
 
 		/*
 		 * se agregan las opiniones omitiendo el opinarMuestra, ya que al ser todas
@@ -124,38 +131,122 @@ public class ActualizadorCategoriaTestCase {
 		u.agregarOpinionEnviada(opinion17);
 		u.agregarOpinionEnviada(opinion18);
 		u.agregarOpinionEnviada(opinion19);
+		u.agregarOpinionEnviada(opinion20);
+		u.agregarOpinionEnviada(opinion21);
 
 	}
 
-	/*
-	 * se agrega una muestra y 2 opiniones con antiguedad menor a 30 dias, se espera
-	 * que el usuario haya subido de categoria
-	 */
 	@Test
-	public void testMuestrasYOpinionesDentroDeLos30Dias() {
+	public void testOpinionConAntiguedadMenorA30() {
+		assertTrue(opinion.tieneMenosDe30Dias());
+	}
+
+	@Test
+	public void testOpinionConAntiguedadMayorA30() {
+		assertFalse(opinion21.tieneMenosDe30Dias());
+	}
+
+	@Test
+	public void testMuestraConAntiguedadMenorA30() {
+		assertTrue(muestra.tieneMenosDe30Dias());
+	}
+
+	@Test
+	public void testMuestraConAntiguedadMayorA30() {
+		assertFalse(muestra11.tieneMenosDe30Dias());
+	}
+
+	/*
+	 * se agrega dos muestras y 2 opiniones con antiguedad menor a 30 dias, se
+	 * espera que el usuario haya subido de categoria
+	 */
+
+	@Test
+	public void testAgregarMuestraYOpinionDentroDeLos30Dias() {
+		Foto foto = mock(Foto.class);
+		Ubicacion ubicacion = mock(Ubicacion.class);
+		Muestra muestraAjena = mock(Muestra.class);
+		assertFalse(u.isSubioAExperto());
+		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
+
+		u.opinarMuestra(muestraAjena, "ninguna");
+
+		assertFalse(u.isSubioAExperto());
+	}
+
+	@Test
+	public void testAgregarMuestrasYOpinionesDentroDeLos30Dias() {
 		Foto foto = mock(Foto.class);
 		Ubicacion ubicacion = mock(Ubicacion.class);
 		Muestra muestraAjena = mock(Muestra.class);
 		Muestra muestraAjena2 = mock(Muestra.class);
 		assertFalse(u.isSubioAExperto());
+
+		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
 		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
 
 		u.opinarMuestra(muestraAjena, "ninguna");
-		u.opinarMuestra(muestraAjena2, "Vinchuca Sordida");
+		u.opinarMuestra(muestraAjena2, "chinche foliada");
+
 		assertTrue(u.isSubioAExperto());
 	}
 
 	@Test
-	public void testUnaMuestraConMasDe30Dias() {
-
+	public void testAgregarMuestrasYOpinionDentroDeLos30Dias() {
+		Foto foto = mock(Foto.class);
+		Ubicacion ubicacion = mock(Ubicacion.class);
 		Muestra muestraAjena = mock(Muestra.class);
 		Muestra muestraAjena2 = mock(Muestra.class);
 		assertFalse(u.isSubioAExperto());
-		u.agregarMuestraEnviada(muestra11);
+
+		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
+		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
+
 		u.opinarMuestra(muestraAjena, "ninguna");
-		u.opinarMuestra(muestraAjena2, "Vinchuca Sordida");
+		// u.opinarMuestra(muestraAjena2, "chinche foliada");
+
+		assertFalse(u.isSubioAExperto());
+	}
+
+	@Test
+	public void testAgregarMuestraYOpinionesDentroDeLos30Dias() {
+		Foto foto = mock(Foto.class);
+		Ubicacion ubicacion = mock(Ubicacion.class);
+		Muestra muestraAjena = mock(Muestra.class);
+		Muestra muestraAjena2 = mock(Muestra.class);
 		assertFalse(u.isSubioAExperto());
 
+		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
+//		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
+
+		u.opinarMuestra(muestraAjena, "ninguna");
+		u.opinarMuestra(muestraAjena2, "chinche foliada");
+
+		assertFalse(u.isSubioAExperto());
+	}
+
+	/*
+	 * se agrega una muestra con menos de 30 dias, se espera que no haya subido a
+	 * experto ya que tiene menos de 20 opiniones y con menor antiguedad de 30 dias
+	 * y
+	 */
+	@Test
+	public void testSoloAgregarMuestraConMenosDe30Dias() {
+		Foto foto = mock(Foto.class);
+		Ubicacion ubicacion = mock(Ubicacion.class);
+		assertFalse(u.isSubioAExperto());
+		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
+
+		assertFalse(u.isSubioAExperto());
+
+	}
+
+	@Test
+	public void testSoloAgregarOpinionConMenosDe30Dias() {
+		Muestra muestraAjena = mock(Muestra.class);
+		assertFalse(u.isSubioAExperto());
+		u.opinarMuestra(muestraAjena, "ninguna");
+		assertFalse(u.isSubioAExperto());
 	}
 
 }

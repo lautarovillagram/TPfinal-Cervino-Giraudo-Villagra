@@ -19,12 +19,18 @@ public class ActualizadorDeCategoria implements Observer {
 	 * categoria de usuario regular a experto
 	 */
 
+	public List<Muestra> muestrasEnviadasLosUltimos30Dias() {
+		return this.getObservable().getMuestrasEnviadas().stream().filter(m -> m.tieneMenosDe30Dias()).toList();
+	}
+
+	public List<Opinion> opinionesEnviadasLosUltimos30Dias() {
+		return this.getObservable().getMuestrasOpinadas().stream().filter(m -> m.tieneMenosDe30Dias()).toList();
+	}
+
 	public void actualizar() {
-		List<Muestra> muestrasEnviadasLosUltimos30Dias = this.getObservable().getMuestrasEnviadas().stream()
-				.filter(s -> s.tieneMenosDe30Dias()).toList();
-		List<Opinion> opinionesEnviadasLosUltimos30Dias = this.getObservable().getMuestrasOpinadas().stream()
-				.filter(s -> s.tieneMenosDe30Dias()).toList();
-		if (muestrasEnviadasLosUltimos30Dias.size() > 10 && opinionesEnviadasLosUltimos30Dias.size() > 20) {
+
+		if (this.muestrasEnviadasLosUltimos30Dias().size() > 10
+				&& this.opinionesEnviadasLosUltimos30Dias().size() > 20) {
 			this.getObservable().setSubioAExperto(true);
 
 		} else {
