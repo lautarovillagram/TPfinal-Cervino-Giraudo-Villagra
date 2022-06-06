@@ -4,12 +4,11 @@ import java.time.LocalDateTime;
 
 public class UsuarioRegular extends Usuario implements Observable {
 	private ActualizadorDeCategoria observador;
+	private boolean subioAExperto = false;
 
 	public ActualizadorDeCategoria getObservador() {
 		return observador;
 	}
-
-	private boolean subioAExperto = false;
 
 	public void setObservador(ActualizadorDeCategoria observer) {
 		this.observador = observer;
