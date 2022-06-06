@@ -17,8 +17,8 @@ public abstract class Usuario {
 		this.muestrasEnviadas.add(muestra);
 	}
 
-	public List<Opinion> getMuestrasOpinadas() {
-		return opinionesEnviadas;
+	public List<Opinion> getOpinionesEnviadas() {
+		return opinionesEnviadas.stream().filter(o -> o.getMuestraOpinada().getUsuarioRecolectador() != this).toList();
 	}
 
 	public void agregarOpinionEnviada(Opinion opinion) {
@@ -83,7 +83,7 @@ public abstract class Usuario {
 	 * Verifica que el usuario no este opinando dos veces en la misma muestra
 	 */
 	public boolean yaOpino(Muestra muestra) {
-		return this.getMuestrasOpinadas().stream().anyMatch(o -> o.getMuestraOpinada() == muestra);
+		return this.getOpinionesEnviadas().stream().anyMatch(o -> o.getMuestraOpinada() == muestra);
 	}
 
 }
