@@ -44,24 +44,23 @@ public class ActualizadorCategoriaTestCase {
 	private ActualizadorDeCategoria observer;
 
 	private UsuarioRegular u;
-	private UsuarioRegular u2;
 
 	/*
-	 * el setup agrega 9 muestras con menos de 30 dias de antiguedad y 1 con mas de
-	 * 30 dias de antiguedad, tambien 19 opiniones con menos de 30 dias de
+	 * el setup agrega 10 muestras con menos de 30 dias de antiguedad y 1 con mas de
+	 * 30 dias de antiguedad, tambien 20 opiniones con menos de 30 dias de
 	 * antiguedad y 1 con mas de 30 dias de antiguedad
 	 */
 	@BeforeEach
 	public void SetUp() {
 		LocalDateTime fecha = LocalDateTime.now().minusDays(7);
-		LocalDateTime fecha2 = LocalDateTime.now().minusDays(90);
+		LocalDateTime fecha2 = LocalDateTime.now().minusDays(31);
 		Ubicacion ubicacion = mock(Ubicacion.class);
 		Foto foto = mock(Foto.class);
 		Muestra muestraAjena = mock(Muestra.class);
-		ActualizadorDeCategoria observador = new ActualizadorDeCategoria();
+		observer = new ActualizadorDeCategoria();
 		u = new UsuarioRegular();
-		u.setObservador(observador);
-		observador.setObservable(u);
+		u.setObservador(observer);
+		observer.setObservable(u);
 
 		muestra = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
 		muestra2 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
@@ -105,7 +104,7 @@ public class ActualizadorCategoriaTestCase {
 		u.agregarMuestraEnviada(muestra7);
 		u.agregarMuestraEnviada(muestra8);
 		u.agregarMuestraEnviada(muestra9);
-		// u.agregarMuestraEnviada(muestra10);
+		u.agregarMuestraEnviada(muestra10);
 		u.agregarMuestraEnviada(muestra11);
 
 		/*
@@ -171,7 +170,7 @@ public class ActualizadorCategoriaTestCase {
 
 		u.opinarMuestra(muestraAjena, "ninguna");
 
-		assertFalse(u.isSubioAExperto());
+		assertTrue(u.isSubioAExperto());
 	}
 
 	@Test
@@ -191,45 +190,12 @@ public class ActualizadorCategoriaTestCase {
 		assertTrue(u.isSubioAExperto());
 	}
 
-	@Test
-	public void testAgregarMuestrasYOpinionDentroDeLos30Dias() {
-		Foto foto = mock(Foto.class);
-		Ubicacion ubicacion = mock(Ubicacion.class);
-		Muestra muestraAjena = mock(Muestra.class);
-		Muestra muestraAjena2 = mock(Muestra.class);
-		assertFalse(u.isSubioAExperto());
-
-		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
-		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
-
-		u.opinarMuestra(muestraAjena, "ninguna");
-		// u.opinarMuestra(muestraAjena2, "chinche foliada");
-
-		assertFalse(u.isSubioAExperto());
-	}
-
-	@Test
-	public void testAgregarMuestraYOpinionesDentroDeLos30Dias() {
-		Foto foto = mock(Foto.class);
-		Ubicacion ubicacion = mock(Ubicacion.class);
-		Muestra muestraAjena = mock(Muestra.class);
-		Muestra muestraAjena2 = mock(Muestra.class);
-		assertFalse(u.isSubioAExperto());
-
-		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
-//		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
-
-		u.opinarMuestra(muestraAjena, "ninguna");
-		u.opinarMuestra(muestraAjena2, "chinche foliada");
-
-		assertFalse(u.isSubioAExperto());
-	}
-
 	/*
 	 * se agrega una muestra con menos de 30 dias, se espera que no haya subido a
 	 * experto ya que tiene menos de 20 opiniones y con menor antiguedad de 30 dias
 	 * y
 	 */
+
 	@Test
 	public void testSoloAgregarMuestraConMenosDe30Dias() {
 		Foto foto = mock(Foto.class);
@@ -238,6 +204,25 @@ public class ActualizadorCategoriaTestCase {
 		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
 
 		assertFalse(u.isSubioAExperto());
+
+	}
+
+	@Test
+	public void test11MuestrasConMenosDe30Dias() {
+		Foto foto = mock(Foto.class);
+		Ubicacion ubicacion = mock(Ubicacion.class);
+		assertEquals(u.getObservador().muestrasEnviadasLosUltimos30Dias().size(), 10);
+		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
+		assertEquals(u.getObservador().muestrasEnviadasLosUltimos30Dias().size(), 11);
+
+	}
+
+	@Test
+	public void test21OpinionesConMenosDe30Dias() {
+		Muestra muestraAjena = mock(Muestra.class);
+		assertEquals(u.getObservador().opinionesEnviadasLosUltimos30Dias().size(), 20);
+		u.opinarMuestra(muestraAjena, "ninguna");
+		assertEquals(u.getObservador().opinionesEnviadasLosUltimos30Dias().size(), 21);
 
 	}
 
