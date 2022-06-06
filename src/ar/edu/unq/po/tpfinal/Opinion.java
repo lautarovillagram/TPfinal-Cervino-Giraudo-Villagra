@@ -21,6 +21,10 @@ public class Opinion {
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
 	}
+	
+	public Usuario getUsuarioOpinador() {
+		return usuarioOpinador;
+	}
 
 	/*
 	 * constructor para la opinion de los usuarios regulares
