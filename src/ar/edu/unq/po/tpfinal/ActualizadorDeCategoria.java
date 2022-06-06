@@ -24,7 +24,7 @@ public class ActualizadorDeCategoria implements Observer {
 	}
 
 	public List<Opinion> opinionesEnviadasLosUltimos30Dias() {
-		return this.getObservable().getMuestrasOpinadas().stream().filter(m -> m.tieneMenosDe30Dias()).toList();
+		return this.getObservable().getOpinionesEnviadas().stream().filter(o -> o.tieneMenosDe30Dias()).toList();
 	}
 
 	public void actualizar() {
