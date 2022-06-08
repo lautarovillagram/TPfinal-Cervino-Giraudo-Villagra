@@ -97,11 +97,15 @@ public class Muestra {
 			return resultado;
 		}
 	}
-
+	
 	private boolean hayEmpate(Map<String, Integer> opiniones) {
 		// Obtengo el mayor numero de votos del map
 		int maxNumeroVotos = Collections.max(opiniones.values());
 		// Si hay mas de 1 opinion con la mayor cantidad de votos hay empate
 		return opiniones.entrySet().stream().filter(me->me.getValue()==maxNumeroVotos).count() > 1;
+	}
+
+	public Ubicacion getUbicacion() {
+		return ubicacion;
 	}
 }
