@@ -116,7 +116,7 @@ public class Muestra {
 			return resultado;
 		}
 	}
-
+	
 	private boolean hayEmpate(Map<String, Integer> opiniones) {
 		// Obtengo el mayor numero de votos del map
 		int maxNumeroVotos = Collections.max(opiniones.values());
@@ -129,3 +129,9 @@ public class Muestra {
 	}
 
 }
+
+	public Ubicacion getUbicacion() {
+		return ubicacion;
+	}
+}
+
