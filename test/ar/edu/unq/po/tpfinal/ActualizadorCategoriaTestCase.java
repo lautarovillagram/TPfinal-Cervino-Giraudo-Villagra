@@ -86,13 +86,13 @@ public class ActualizadorCategoriaTestCase {
 		opinion11 = new Opinion(muestraAjena, u, fecha, "ninguna", false);
 		opinion12 = new Opinion(muestraAjena, u, fecha, "Vinchuca Infestans", false);
 		opinion13 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion14 = new Opinion(muestraAjena, u, fecha, "chinche foliada", false);
+		opinion14 = new Opinion(muestraAjena, u, fecha, "Chinche Foliada", false);
 		opinion15 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion16 = new Opinion(muestraAjena, u, fecha, "phtia-chinche", false);
+		opinion16 = new Opinion(muestraAjena, u, fecha, "Phtia-Chinche", false);
 		opinion17 = new Opinion(muestraAjena, u, fecha, "Vinchuca Infestans", false);
 		opinion18 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
 		opinion19 = new Opinion(muestraAjena, u, fecha, "imagen poco clara", false);
-		opinion20 = new Opinion(muestraAjena, u, fecha, "chinche foliada", false);
+		opinion20 = new Opinion(muestraAjena, u, fecha, "Chinche Foliada", false);
 		opinion21 = new Opinion(muestraAjena, u, fecha2, "imagen poco clara", false);
 
 		u.agregarMuestraEnviada(muestra);
@@ -185,7 +185,7 @@ public class ActualizadorCategoriaTestCase {
 		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
 
 		u.opinarMuestra(muestraAjena, "ninguna");
-		u.opinarMuestra(muestraAjena2, "chinche foliada");
+		u.opinarMuestra(muestraAjena2, "Chinche Foliada");
 
 		assertTrue(u.isSubioAExperto());
 	}
