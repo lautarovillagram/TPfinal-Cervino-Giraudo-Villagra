@@ -14,9 +14,21 @@ public class Muestra {
 	private Foto foto;
 	private Ubicacion ubicacion;
 	private Usuario usuarioRecolectador;
+	private LocalDateTime fecha;
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	// private List<String> opinionesExpertas = new ArrayList<String>();
-	private LocalDateTime fecha;
+
+	public Usuario getUsuarioRecolectador() {
+		return usuarioRecolectador;
+	}
+
+	public LocalDateTime getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(LocalDateTime fecha) {
+		this.fecha = fecha;
+	}
 
 	public List<Opinion> getOpiniones() {
 		return opiniones;
@@ -35,28 +47,32 @@ public class Muestra {
 	 */
 
 	public Muestra(String especie, Foto foto, Ubicacion ubicacion, Usuario usuarioRecolectador, LocalDateTime fecha) {
+
 		super();
 		this.especie = especie;
 		this.foto = foto;
 		this.ubicacion = ubicacion;
 		this.usuarioRecolectador = usuarioRecolectador;
-		this.fecha = LocalDateTime.now();
-		
+		this.fecha = fecha;
+
 		// La opinion del usuario recolectador tambien debe tenerse en cuenta
-		this.usuarioRecolectador.opinarMuestra(this, this.especie);
-		//this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha, this.especie, this.usuarioRecolectador.esExperto()));
+		this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this, especie);
+		// this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha,
+		// this.especie, this.usuarioRecolectador.esExperto()));
 	}
-	
+
 	// Indica si al menos 2 usuarios expertos tienen la misma opinion
 	public boolean estaVerificada() {
-		List<String> especiesOpinionesExpertas = this.opinionesDeExpertos().stream().map(o-> o.getEspecie()).collect(Collectors.toList());
-		
+		List<String> especiesOpinionesExpertas = this.opinionesDeExpertos().stream().map(o -> o.getEspecie())
+				.collect(Collectors.toList());
+
 		HashSet<String> posiblesOpiniones = new HashSet<>(especiesOpinionesExpertas);
-		
-		for(String e: posiblesOpiniones) {
+
+		for (String e : posiblesOpiniones) {
 			if (Collections.frequency(especiesOpinionesExpertas, e) >= 2) {
 				return true;
-			};
+			}
+			;
 		}
 		return false;
 	}
@@ -69,27 +85,30 @@ public class Muestra {
 	public List<Opinion> opinionesDeExpertos() {
 		return this.getOpiniones().stream().filter(o -> o.esOpinionExperta()).collect(Collectors.toList());
 	}
-	
+
 	public String resultadoActual() {
 		// Agrego las especies de cada opinion a un arraylist
 		List<String> especies = new ArrayList<>();
-		this.getOpiniones().forEach(o -> {especies.add(o.getEspecie()); });
-		
+		this.getOpiniones().forEach(o -> {
+			especies.add(o.getEspecie());
+		});
+
 		// Agrego las posibles opiniones distintas a un set para no tener repetidos
 		HashSet<String> posiblesOpiniones = new HashSet<>(especies);
-		
+
 		// Creo un map con cada especie como clave y su cantidad de votos como valor
 		Map<String, Integer> opinionesXcant = new HashMap<>();
-		posiblesOpiniones.forEach(e -> {opinionesXcant.put(e, Collections.frequency(especies, e)); });
-		
+		posiblesOpiniones.forEach(e -> {
+			opinionesXcant.put(e, Collections.frequency(especies, e));
+		});
+
 		if (hayEmpate(opinionesXcant)) {
 			return "No definido";
-		}
-		else {
+		} else {
 			String resultado = "";
 			int value = 0;
 			for (Map.Entry<String, Integer> me : opinionesXcant.entrySet()) {
-				if(me.getValue() > value) {
+				if (me.getValue() > value) {
 					value = me.getValue();
 					resultado = me.getKey();
 				}
@@ -97,12 +116,16 @@ public class Muestra {
 			return resultado;
 		}
 	}
-	
+
 	private boolean hayEmpate(Map<String, Integer> opiniones) {
 		// Obtengo el mayor numero de votos del map
 		int maxNumeroVotos = Collections.max(opiniones.values());
 		// Si hay mas de 1 opinion con la mayor cantidad de votos hay empate
-		return opiniones.entrySet().stream().filter(me->me.getValue()==maxNumeroVotos).count() > 1;
+		return opiniones.entrySet().stream().filter(me -> me.getValue() == maxNumeroVotos).count() > 1;
+	}
+
+	public boolean tieneMenosDe30Dias() {
+		return this.getFecha().isAfter(LocalDateTime.now().minusDays(30));
 	}
 
 	public Ubicacion getUbicacion() {
