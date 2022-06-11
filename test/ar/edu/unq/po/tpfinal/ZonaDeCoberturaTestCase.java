@@ -112,4 +112,19 @@ public class ZonaDeCoberturaTestCase {
 		florencioVarela.agregarMuestraVerificada(muestra);
 		assertEquals(0, florencioVarela.getMuestrasVerificadas().size());
 	}
+	
+	@Test
+	public void testUnaZonaDeCoberturaPuedeAgregarUnObservador() {
+		OrganizacionObserver o = mock(Organizacion.class);
+		florencioVarela.addObserver(o);
+		assertEquals(1, florencioVarela.getObservadores().size());
+	}
+	
+	@Test
+	public void testUnaZonaDeCoberturaPuedeQuitarAUnObservador() {
+		OrganizacionObserver o = mock(Organizacion.class);
+		florencioVarela.addObserver(o);
+		florencioVarela.deleteObserver(o);
+		assertEquals(0, florencioVarela.getObservadores().size());
+	}
 }

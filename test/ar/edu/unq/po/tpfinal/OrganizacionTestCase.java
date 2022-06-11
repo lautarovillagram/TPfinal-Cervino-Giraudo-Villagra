@@ -13,10 +13,11 @@ public class OrganizacionTestCase {
 	
 	FuncionalidadExterna f1;
 	FuncionalidadExterna f2;
+	Ubicacion ubicacion;
 	
 	@BeforeEach
 	public void setUp() {
-		Ubicacion ubicacion = mock(Ubicacion.class);
+		ubicacion = mock(Ubicacion.class);
 		f1 = mock(FuncionalidadExterna.class);
 		f2 = mock(FuncionalidadExterna.class);
 		
@@ -36,6 +37,11 @@ public class OrganizacionTestCase {
 	public void testCantEmpleados() {
 		int resultado = 25;
 		assertEquals(resultado, o.getCantEmpleados());
+	}
+	
+	@Test
+	public void testUbicacion() {
+		assertEquals(ubicacion, o.getUbicacion());
 	}
 	
 	@Test
