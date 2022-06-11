@@ -12,7 +12,7 @@ public class UsuarioExperto extends Usuario {
 			muestra.setVerificada(true);
 		}
 		// Agrego la nueva opinion a la muestra y a la lista de opiniones del usuario
-		Opinion opinion = new Opinion(muestra, this, LocalDateTime.now(), especie, true);
+		Opinion opinion = new Opinion(muestra, this, LocalDateTime.now(), especie);
 		this.agregarOpinionEnviada(opinion);
 		muestra.agregarOpinion(opinion);
 	}
