@@ -17,6 +17,7 @@ public class Muestra {
 	private LocalDateTime fecha;
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	// private List<String> opinionesExpertas = new ArrayList<String>();
+	private boolean verificada;
 
 	public Usuario getUsuarioRecolectador() {
 		return usuarioRecolectador;
@@ -54,6 +55,7 @@ public class Muestra {
 		this.ubicacion = ubicacion;
 		this.usuarioRecolectador = usuarioRecolectador;
 		this.fecha = fecha;
+		this.verificada = false;
 
 		// La opinion del usuario recolectador tambien debe tenerse en cuenta
 		this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this, especie);
@@ -63,18 +65,12 @@ public class Muestra {
 
 	// Indica si al menos 2 usuarios expertos tienen la misma opinion
 	public boolean estaVerificada() {
-		List<String> especiesOpinionesExpertas = this.opinionesDeExpertos().stream().map(o -> o.getEspecie())
-				.collect(Collectors.toList());
-
-		HashSet<String> posiblesOpiniones = new HashSet<>(especiesOpinionesExpertas);
-
-		for (String e : posiblesOpiniones) {
-			if (Collections.frequency(especiesOpinionesExpertas, e) >= 2) {
-				return true;
-			}
-			;
-		}
-		return false;
+		return verificada;
+	}
+	
+	// Permite cambiar el estado de verificacion de la muestra
+	public void setVerificada(Boolean verificada) {
+		this.verificada = verificada;
 	}
 
 	public boolean opinoUnExperto() {
