@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,7 +17,10 @@ public class Muestra {
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	// private List<String> opinionesExpertas = new ArrayList<String>();
 	private boolean verificada;
-
+	// Contiene a todas las especies y la cantidad de votos que posee cada una
+	private HashMap<String, Integer> especiesXcant = new HashMap<>();
+	
+	
 	public Usuario getUsuarioRecolectador() {
 		return usuarioRecolectador;
 	}
@@ -37,6 +39,13 @@ public class Muestra {
 
 	public void agregarOpinion(Opinion opinion) {
 		this.opiniones.add(opinion);
+		this.agregarOcurrenciaEspecie(opinion.getEspecie());
+	}
+	
+	// Agrego una ocurrencia de la especie al map
+	private void agregarOcurrenciaEspecie(String especie) {
+		this.getEspeciesXCant().putIfAbsent(especie, 0);
+		this.getEspeciesXCant().put(especie, this.getEspeciesXCant().get(especie) + 1);
 	}
 
 	/*
@@ -83,33 +92,13 @@ public class Muestra {
 	}
 
 	public String resultadoActual() {
-		// Agrego las especies de cada opinion a un arraylist
-		List<String> especies = new ArrayList<>();
-		this.getOpiniones().forEach(o -> {
-			especies.add(o.getEspecie());
-		});
-
-		// Agrego las posibles opiniones distintas a un set para no tener repetidos
-		HashSet<String> posiblesOpiniones = new HashSet<>(especies);
-
-		// Creo un map con cada especie como clave y su cantidad de votos como valor
-		Map<String, Integer> opinionesXcant = new HashMap<>();
-		posiblesOpiniones.forEach(e -> {
-			opinionesXcant.put(e, Collections.frequency(especies, e));
-		});
-
-		if (hayEmpate(opinionesXcant)) {
+		if (hayEmpate(this.getEspeciesXCant())) {
 			return "No definido";
-		} else {
-			String resultado = "";
-			int value = 0;
-			for (Map.Entry<String, Integer> me : opinionesXcant.entrySet()) {
-				if (me.getValue() > value) {
-					value = me.getValue();
-					resultado = me.getKey();
-				}
-			}
-			return resultado;
+		}
+		else {
+			//Obtengo la entrada del map con el numero mas grande de votos
+			Map.Entry<String, Integer> me = Collections.max(especiesXcant.entrySet(), Map.Entry.comparingByValue());
+			return me.getKey();
 		}
 	}
 
@@ -126,5 +115,9 @@ public class Muestra {
 
 	public Ubicacion getUbicacion() {
 		return ubicacion;
+	}
+	
+	private Map<String, Integer> getEspeciesXCant() {
+		return especiesXcant;
 	}
 }
