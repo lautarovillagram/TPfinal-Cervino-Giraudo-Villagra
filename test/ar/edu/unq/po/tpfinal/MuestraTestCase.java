@@ -90,4 +90,20 @@ public class MuestraTestCase {
 		
 		assertTrue(muestra.estaVerificada());
 	}
+	
+	@Test public void testUnaMuestraPuedeSaberLaFechaDeSuUltimaVotacion() {
+		LocalDateTime fecha =  LocalDateTime.of(2023, 05, 15, 15,55);
+		LocalDateTime fecha2 = LocalDateTime.of(2023, 05, 30, 15,58);
+		
+		Opinion o = mock(Opinion.class);
+		when(o.getFecha()).thenReturn(fecha);
+		
+		Opinion o2 = mock(Opinion.class);
+		when(o2.getFecha()).thenReturn(fecha2);
+		
+		muestra.agregarOpinion(o);
+		muestra.agregarOpinion(o2);
+		
+		assertEquals(fecha2, muestra.getFechaUltimaVotacion());
+	}
 }

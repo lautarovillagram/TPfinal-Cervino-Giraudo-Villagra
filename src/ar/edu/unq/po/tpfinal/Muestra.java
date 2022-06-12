@@ -3,6 +3,7 @@ package ar.edu.unq.po.tpfinal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class Muestra {
 		this.verificada = false;
 
 		// La opinion del usuario recolectador tambien debe tenerse en cuenta
-		this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this, especie);
+		this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this, this.especie);
 		// this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha,
 		// this.especie, this.usuarioRecolectador.esExperto()));
 	}
@@ -112,7 +113,11 @@ public class Muestra {
 	public boolean tieneMenosDe30Dias() {
 		return this.getFecha().isAfter(LocalDateTime.now().minusDays(30));
 	}
-
+	
+	public LocalDateTime getFechaUltimaVotacion() {
+		return this.getOpiniones().stream().max(Comparator.comparing(Opinion::getFecha)).get().getFecha(); 
+	}
+	
 	public Ubicacion getUbicacion() {
 		return ubicacion;
 	}
