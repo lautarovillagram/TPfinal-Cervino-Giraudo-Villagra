@@ -95,4 +95,42 @@ public class BuscadorTestCase {
 		assertTrue(resultado.contains(m2));
 		assertFalse(resultado.contains(m3));
 	}
+	
+	@Test
+	public void testCombinar2CriteriosDeBusquedaOR() {
+		when(m1.resultadoActual()).thenReturn("Vinchuca Infestans");
+		when(m1.estaVerificada()).thenReturn(true);
+		
+		when(m2.resultadoActual()).thenReturn("Vinchuca Infestans");
+		when(m2.estaVerificada()).thenReturn(false);
+		
+		when(m3.resultadoActual()).thenReturn("Chinche Foliada");
+		when(m3.estaVerificada()).thenReturn(false);
+		
+		
+		List<Muestra> resultado = buscador.buscarPor_O_(buscador.buscarPorNivelDeVerificacion("verificada"),
+				                                        buscador.buscarPorTipoDeInsecto("Vinchuca Infestans"));
+		assertTrue(resultado.contains(m1));
+		assertTrue(resultado.contains(m2));
+		assertFalse(resultado.contains(m3));
+	}
+	
+	@Test
+	public void testCombinar2CriteriosDeBusquedaAND() {
+		when(m1.resultadoActual()).thenReturn("Vinchuca Infestans");
+		when(m1.estaVerificada()).thenReturn(true);
+		
+		when(m2.resultadoActual()).thenReturn("Vinchuca Infestans");
+		when(m2.estaVerificada()).thenReturn(false);
+		
+		when(m3.resultadoActual()).thenReturn("Chinche Foliada");
+		when(m3.estaVerificada()).thenReturn(true);
+		
+		
+		List<Muestra> resultado = buscador.buscarPor_Y_(buscador.buscarPorNivelDeVerificacion("verificada"),
+				                                        buscador.buscarPorTipoDeInsecto("Vinchuca Infestans"));
+		assertTrue(resultado.contains(m1));
+		assertFalse(resultado.contains(m2));
+		assertFalse(resultado.contains(m3));
+	}
 }

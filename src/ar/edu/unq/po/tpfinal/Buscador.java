@@ -1,7 +1,7 @@
 package ar.edu.unq.po.tpfinal;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +10,32 @@ public class Buscador {
 
 	public Buscador(List<Muestra> muestras) {
 		this.setMuestras(muestras);
+	}
+	
+	// Recibe por parametros 2 listas que son el resultado de aplicar algun filtro de busqueda
+	// y devuelve las que cumplan con ambos criterios
+	public List<Muestra> buscarPor_Y_(List<Muestra> filtro1, List<Muestra> filtro2) {
+		// Si es un AND tengo que crear una lista con solo los elementos que se repitan en ambas listas
+		List<Muestra> resultado = new ArrayList<>();
+		for(Muestra m: filtro1) {
+			if (filtro2.contains(m)) {
+				resultado.add(m);
+			}
+		}
+		return resultado;
+	}
+	
+	// Recibe por parametros 2 listas que son el resultado de aplicar algun filtro de busqueda
+	// y devuelve las que cumplan con alguno de los 2 criterios
+	public List<Muestra> buscarPor_O_(List<Muestra> filtro1, List<Muestra> filtro2) {
+		// Si es un OR tengo que combinar ambas listas
+		List<Muestra> resultado = filtro1;
+		for(Muestra m: filtro2) {
+			if (! resultado.contains(m)) { 
+				resultado.add(m);
+			}
+		}
+		return resultado;
 	}
 	
 	public List<Muestra> buscarPorFechaDeCreacion(LocalDateTime fecha) {
