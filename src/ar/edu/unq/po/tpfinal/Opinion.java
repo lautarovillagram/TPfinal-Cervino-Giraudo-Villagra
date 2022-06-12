@@ -33,9 +33,9 @@ public class Opinion {
 			boolean esOpinionExperta) {
 		this.muestraOpinada = muestraAOpinar;
 		this.usuarioOpinador = usuarioOpinador;
-		this.fecha = fecha;
+		this.setFecha(fecha);
 		this.especie = tipo;
-		this.esOpinionExperta = esOpinionExperta;
+		this.setEsOpinionExperta(esOpinionExperta);
 	}
 
 	/*
@@ -46,7 +46,7 @@ public class Opinion {
 		this.usuarioOpinador = usuarioOpinador;
 		this.fecha = fecha;
 		this.especie = tipo;
-		this.esOpinionExperta = true;
+		this.setEsOpinionExperta(true);
 	}
 
 	public boolean esOpinionExperta() {

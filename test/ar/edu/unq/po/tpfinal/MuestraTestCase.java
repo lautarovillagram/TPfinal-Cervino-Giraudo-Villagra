@@ -17,12 +17,12 @@ public class MuestraTestCase {
 	private UsuarioRegular u5;
 	private ActualizadorDeCategoria observer;
 	private ActualizadorDeCategoria observer2;
-
+	private Ubicacion ubicacion;
 	
 	@BeforeEach
 	public void setUp() {
 		LocalDateTime fecha = LocalDateTime.now();
-		Ubicacion ubicacion = mock(Ubicacion.class);
+		ubicacion = mock(Ubicacion.class);
 		Foto foto = mock(Foto.class);
 		ActualizadorDeCategoria observer3 = mock(ActualizadorDeCategoria.class);
 		u5 = new UsuarioRegular();
@@ -105,5 +105,9 @@ public class MuestraTestCase {
 		muestra.agregarOpinion(o2);
 		
 		assertEquals(fecha2, muestra.getFechaUltimaVotacion());
+	}
+	
+	@Test public void testUnaMuestraPuedeConocerSuUbicacion() {
+		assertEquals(ubicacion, muestra.getUbicacion());
 	}
 }
