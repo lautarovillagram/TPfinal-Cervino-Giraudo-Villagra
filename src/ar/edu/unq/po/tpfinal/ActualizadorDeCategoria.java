@@ -2,16 +2,7 @@ package ar.edu.unq.po.tpfinal;
 
 import java.util.List;
 
-public class ActualizadorDeCategoria implements ObserverCategoria {
-	private UsuarioRegular observable;
-
-	public UsuarioRegular getObservable() {
-		return observable;
-	}
-
-	public void setObservable(UsuarioRegular observable) {
-		this.observable = observable;
-	}
+public class ActualizadorDeCategoria {
 
 	/*
 	 * verifica la cantidad de muestras enviadas y opiniones enviadas, si 10
@@ -19,22 +10,22 @@ public class ActualizadorDeCategoria implements ObserverCategoria {
 	 * categoria de usuario regular a experto
 	 */
 
-	public List<Muestra> muestrasEnviadasLosUltimos30Dias() {
-		return this.getObservable().getMuestrasEnviadas().stream().filter(m -> m.tieneMenosDe30Dias()).toList();
+	public List<Muestra> muestrasEnviadasLosUltimos30Dias(Usuario usuario) {
+		return usuario.getMuestrasEnviadas().stream().filter(m -> m.tieneMenosDe30Dias()).toList();
 	}
 
-	public List<Opinion> opinionesEnviadasLosUltimos30Dias() {
-		return this.getObservable().getOpinionesEnviadas().stream().filter(o -> o.tieneMenosDe30Dias()).toList();
+	public List<Opinion> opinionesEnviadasLosUltimos30Dias(Usuario usuario) {
+		return usuario.getOpinionesEnviadas().stream().filter(o -> o.tieneMenosDe30Dias()).toList();
 	}
 
-	public void actualizar() {
+	public void actualizarCategoria(Usuario usuario) {
 
-		if (this.muestrasEnviadasLosUltimos30Dias().size() > 10
-				&& this.opinionesEnviadasLosUltimos30Dias().size() > 20) {
-			this.getObservable().setSubioAExperto(true);
+		if (this.muestrasEnviadasLosUltimos30Dias(usuario).size() > 10
+				&& this.opinionesEnviadasLosUltimos30Dias(usuario).size() > 20) {
+			usuario.setSubioAExperto(true);
 
 		} else {
-			this.getObservable().setSubioAExperto(false);
+			usuario.setSubioAExperto(false);
 		}
 	}
 

@@ -85,5 +85,7 @@ public abstract class Usuario {
 	public boolean yaOpino(Muestra muestra) {
 		return this.getOpinionesEnviadas().stream().anyMatch(o -> o.getMuestraOpinada() == muestra);
 	}
+	
+	public abstract void setSubioAExperto(boolean subioAExperto);
 
 }

@@ -2,22 +2,15 @@ package ar.edu.unq.po.tpfinal;
 
 import java.time.LocalDateTime;
 
-public class UsuarioRegular extends Usuario implements ObservableCategoria {
-	private ActualizadorDeCategoria observador;
+public class UsuarioRegular extends Usuario {
+
 	private boolean subioAExperto = false;
-
-	public ActualizadorDeCategoria getObservador() {
-		return observador;
-	}
-
-	public void setObservador(ActualizadorDeCategoria observer) {
-		this.observador = observer;
-	}
 
 	public boolean isSubioAExperto() {
 		return subioAExperto;
 	}
 
+	@Override
 	public void setSubioAExperto(boolean subioAExperto) {
 		this.subioAExperto = subioAExperto;
 	}
@@ -28,19 +21,12 @@ public class UsuarioRegular extends Usuario implements ObservableCategoria {
 		Opinion opinion = new Opinion(muestra, this, LocalDateTime.now(), especie, this.isSubioAExperto());
 		this.agregarOpinionEnviada(opinion);
 		muestra.agregarOpinion(opinion);
-		this.notificar();
 
 	}
 
 	@Override
 	public void enviarMuestra(Muestra muestraAEnviar) {
 		this.agregarMuestraEnviada(muestraAEnviar);
-		this.notificar();
-
-	}
-
-	public void notificar() {
-		this.getObservador().actualizar();
 
 	}
 
