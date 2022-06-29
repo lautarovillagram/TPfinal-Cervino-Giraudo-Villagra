@@ -24,6 +24,7 @@ public class Sistema {
 	// Agrega una muestra al sistema, al buscador y a las zonas que pertenezca
 	public void agregarMuestra(Muestra m) {
 		this.getMuestras().add(m);
+		m.getUsuarioRecolectador().agregarMuestraEnviada(m);
 		this.getBuscador().agregarMuestra(m);
 		for (ZonaDeCobertura z : this.getZonasDeCobertura()) {
 			z.agregarMuestra(m); // agregarMuestra se encarga de comprobar si la muestra pertenece antes de
@@ -32,9 +33,12 @@ public class Sistema {
 	}
 
 	public void agregarOpinion(Opinion o) {
-		if (o.getUsuarioOpinador().puedeOpinarEn(o.getMuestraOpinada())) {
+		Especies especies = new Especies();
+		if (o.getUsuarioOpinador().puedeOpinarEn(o.getMuestraOpinada())
+				&& especies.getCategorias().contains(o.getEspecie())) {
 
 			this.getOpiniones().add(o);
+			o.getUsuarioOpinador().agregarOpinionEnviada(o);
 		}
 	}
 
