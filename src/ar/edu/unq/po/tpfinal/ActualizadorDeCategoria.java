@@ -1,6 +1,7 @@
 package ar.edu.unq.po.tpfinal;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ActualizadorDeCategoria {
 
@@ -11,11 +12,11 @@ public class ActualizadorDeCategoria {
 	 */
 
 	public List<Muestra> muestrasEnviadasLosUltimos30Dias(Usuario usuario) {
-		return usuario.getMuestrasEnviadas().stream().filter(m -> m.tieneMenosDe30Dias()).toList();
+		return usuario.getMuestrasEnviadas().stream().filter(m -> m.tieneMenosDe30Dias()).collect(Collectors.toList());
 	}
 
 	public List<Opinion> opinionesEnviadasLosUltimos30Dias(Usuario usuario) {
-		return usuario.getOpinionesEnviadas().stream().filter(o -> o.tieneMenosDe30Dias()).toList();
+		return usuario.getOpinionesEnviadas().stream().filter(o -> o.tieneMenosDe30Dias()).collect(Collectors.toList());
 	}
 
 	public void actualizarCategoria(Usuario usuario) {

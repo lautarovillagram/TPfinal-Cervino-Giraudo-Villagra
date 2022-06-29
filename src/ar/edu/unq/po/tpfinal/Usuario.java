@@ -3,6 +3,7 @@ package ar.edu.unq.po.tpfinal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Usuario {
 
@@ -18,7 +19,7 @@ public abstract class Usuario {
 	}
 
 	public List<Opinion> getOpinionesEnviadas() {
-		return opinionesEnviadas.stream().filter(o -> o.getMuestraOpinada().getUsuarioRecolectador() != this).toList();
+		return opinionesEnviadas.stream().filter(o -> o.getMuestraOpinada().getUsuarioRecolectador() != this).collect(Collectors.toList());
 	}
 
 	public void agregarOpinionEnviada(Opinion opinion) {
