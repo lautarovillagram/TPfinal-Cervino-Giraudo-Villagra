@@ -21,7 +21,7 @@ public class Opinion {
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = fecha;
 	}
-	
+
 	public Usuario getUsuarioOpinador() {
 		return usuarioOpinador;
 	}
@@ -63,5 +63,9 @@ public class Opinion {
 
 	public boolean tieneMenosDe30Dias() {
 		return this.getFecha().isAfter(LocalDateTime.now().minusDays(30));
+	}
+
+	public boolean esOpinionValida() {
+		return !(this.getUsuarioOpinador().puedeOpinarEn(muestraOpinada));
 	}
 }

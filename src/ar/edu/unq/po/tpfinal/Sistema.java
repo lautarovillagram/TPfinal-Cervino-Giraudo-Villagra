@@ -32,7 +32,10 @@ public class Sistema {
 	}
 
 	public void agregarOpinion(Opinion o) {
-		this.getOpiniones().add(o);
+		if (o.getUsuarioOpinador().puedeOpinarEn(o.getMuestraOpinada())) {
+
+			this.getOpiniones().add(o);
+		}
 	}
 
 	public void setRecategorizador(ActualizadorDeCategoria actualizador) {
