@@ -23,12 +23,15 @@ public class Sistema {
 
 	// Agrega una muestra al sistema, al buscador y a las zonas que pertenezca
 	public void agregarMuestra(Muestra m) {
-		this.getMuestras().add(m);
-		m.getUsuarioRecolectador().agregarMuestraEnviada(m);
-		this.getBuscador().agregarMuestra(m);
-		for (ZonaDeCobertura z : this.getZonasDeCobertura()) {
-			z.agregarMuestra(m); // agregarMuestra se encarga de comprobar si la muestra pertenece antes de
-									// agregarla
+		Especies especies = new Especies();
+		if (especies.getCategorias().contains(m.getEspecie())) {
+			this.getMuestras().add(m);
+			m.getUsuarioRecolectador().agregarMuestraEnviada(m);
+			this.getBuscador().agregarMuestra(m);
+			for (ZonaDeCobertura z : this.getZonasDeCobertura()) {
+				z.agregarMuestra(m); // agregarMuestra se encarga de comprobar si la muestra pertenece antes de
+										// agregarla
+			}
 		}
 	}
 
@@ -45,6 +48,10 @@ public class Sistema {
 
 	public void setRecategorizador(ActualizadorDeCategoria actualizador) {
 		this.recategorizador = actualizador;
+	}
+
+	public ActualizadorDeCategoria getRecategorizador() {
+		return this.recategorizador;
 	}
 
 	public void recategorizar() {
@@ -75,5 +82,9 @@ public class Sistema {
 
 	public Buscador getBuscador() {
 		return buscador;
+	}
+
+	public void setBuscador(Buscador buscadorAsignado) {
+		this.buscador = buscadorAsignado;
 	}
 }

@@ -41,9 +41,11 @@ public class ActualizadorDeCategoriaTestCase {
 	private Opinion opinion19;
 	private Opinion opinion20;
 	private Opinion opinion21;
-	private ActualizadorDeCategoria observer;
-
+	private ActualizadorDeCategoria actualizador;
+	private Buscador buscador;
 	private UsuarioRegular u;
+
+	private Sistema sistema;
 
 	/*
 	 * el setup agrega 10 muestras con menos de 30 dias de antiguedad y 1 con mas de
@@ -57,81 +59,101 @@ public class ActualizadorDeCategoriaTestCase {
 		Ubicacion ubicacion = mock(Ubicacion.class);
 		Foto foto = mock(Foto.class);
 		Muestra muestraAjena = mock(Muestra.class);
-		observer = new ActualizadorDeCategoria();
+		Muestra muestraAjena2 = mock(Muestra.class);
+		Muestra muestraAjena3 = mock(Muestra.class);
+		Muestra muestraAjena4 = mock(Muestra.class);
+		Muestra muestraAjena5 = mock(Muestra.class);
+		Muestra muestraAjena6 = mock(Muestra.class);
+		Muestra muestraAjena7 = mock(Muestra.class);
+		Muestra muestraAjena8 = mock(Muestra.class);
+		Muestra muestraAjena9 = mock(Muestra.class);
+		Muestra muestraAjena10 = mock(Muestra.class);
+		Muestra muestraAjena11 = mock(Muestra.class);
+		Muestra muestraAjena12 = mock(Muestra.class);
+		Muestra muestraAjena13 = mock(Muestra.class);
+		Muestra muestraAjena14 = mock(Muestra.class);
+		Muestra muestraAjena15 = mock(Muestra.class);
+		Muestra muestraAjena16 = mock(Muestra.class);
+		Muestra muestraAjena17 = mock(Muestra.class);
+		Muestra muestraAjena18 = mock(Muestra.class);
+		Muestra muestraAjena19 = mock(Muestra.class);
+		Muestra muestraAjena20 = mock(Muestra.class);
+		Muestra muestraAjena21 = mock(Muestra.class);
+		actualizador = new ActualizadorDeCategoria();
 		u = new UsuarioRegular();
-		u.setObservador(observer);
-		observer.setObservable(u);
+		UsuarioRegular u2 = mock(UsuarioRegular.class);
+		sistema = new Sistema();
+		buscador = new Buscador();
+		sistema.setRecategorizador(actualizador);
+		sistema.setBuscador(buscador);
+		sistema.agregarUsuario(u);
 
-		muestra = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
-		muestra2 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
-		muestra3 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u, fecha);
-		muestra4 = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
-		muestra5 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
-		muestra6 = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
-		muestra7 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
-		muestra8 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
-		muestra9 = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
-		muestra10 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u, fecha);
-		muestra11 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u, fecha2);
-		opinion = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion2 = new Opinion(muestraAjena, u, fecha, "Vinchuca Infestans", false);
-		opinion3 = new Opinion(muestraAjena, u, fecha, "ninguna", false);
-		opinion4 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion5 = new Opinion(muestraAjena, u, fecha, "Vinchuca Infestans", false);
-		opinion6 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion7 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion8 = new Opinion(muestraAjena, u, fecha, "Vinchuca Infestans", false);
-		opinion9 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion10 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion11 = new Opinion(muestraAjena, u, fecha, "ninguna", false);
-		opinion12 = new Opinion(muestraAjena, u, fecha, "Vinchuca Infestans", false);
-		opinion13 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion14 = new Opinion(muestraAjena, u, fecha, "Chinche Foliada", false);
-		opinion15 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion16 = new Opinion(muestraAjena, u, fecha, "Phtia-Chinche", false);
-		opinion17 = new Opinion(muestraAjena, u, fecha, "Vinchuca Infestans", false);
-		opinion18 = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana", false);
-		opinion19 = new Opinion(muestraAjena, u, fecha, "imagen poco clara", false);
-		opinion20 = new Opinion(muestraAjena, u, fecha, "Chinche Foliada", false);
-		opinion21 = new Opinion(muestraAjena, u, fecha2, "imagen poco clara", false);
+		muestra = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, fecha);
+		muestra2 = new Muestra("Vinchuca Sordida", foto, ubicacion, u2, fecha);
+		muestra3 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u2, fecha);
+		muestra4 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, fecha);
+		muestra5 = new Muestra("Vinchuca Sordida", foto, ubicacion, u2, fecha);
+		muestra6 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, fecha);
+		muestra7 = new Muestra("Vinchuca Sordida", foto, ubicacion, u2, fecha);
+		muestra8 = new Muestra("Vinchuca Sordida", foto, ubicacion, u2, fecha);
+		muestra9 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, fecha);
+		muestra10 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u2, fecha);
+		muestra11 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u2, fecha2);
+		opinion = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana");
+		opinion2 = new Opinion(muestraAjena2, u, fecha, "Vinchuca Infestans");
+		opinion3 = new Opinion(muestraAjena3, u, fecha, "ninguna");
+		opinion4 = new Opinion(muestraAjena4, u, fecha, "Vinchuca Guasayana");
+		opinion5 = new Opinion(muestraAjena5, u, fecha, "Vinchuca Infestans");
+		opinion6 = new Opinion(muestraAjena6, u, fecha, "Vinchuca Guasayana");
+		opinion7 = new Opinion(muestraAjena7, u, fecha, "Vinchuca Guasayana");
+		opinion8 = new Opinion(muestraAjena8, u, fecha, "Vinchuca Infestans");
+		opinion9 = new Opinion(muestraAjena9, u, fecha, "Vinchuca Guasayana");
+		opinion10 = new Opinion(muestraAjena10, u, fecha, "Vinchuca Guasayana");
+		opinion11 = new Opinion(muestraAjena11, u, fecha, "ninguna");
+		opinion12 = new Opinion(muestraAjena12, u, fecha, "Vinchuca Infestans");
+		opinion13 = new Opinion(muestraAjena13, u, fecha, "Vinchuca Guasayana");
+		opinion14 = new Opinion(muestraAjena14, u, fecha, "Chinche Foliada");
+		opinion15 = new Opinion(muestraAjena15, u, fecha, "Vinchuca Guasayana");
+		opinion16 = new Opinion(muestraAjena16, u, fecha, "Phtia-Chinche");
+		opinion17 = new Opinion(muestraAjena17, u, fecha, "Vinchuca Infestans");
+		opinion18 = new Opinion(muestraAjena18, u, fecha, "Vinchuca Guasayana");
+		opinion19 = new Opinion(muestraAjena19, u, fecha, "imagen poco clara");
+		opinion20 = new Opinion(muestraAjena20, u, fecha, "Chinche Foliada");
+		opinion21 = new Opinion(muestraAjena21, u, fecha2, "imagen poco clara");
 
-		u.agregarMuestraEnviada(muestra);
-		u.agregarMuestraEnviada(muestra2);
-		u.agregarMuestraEnviada(muestra3);
-		u.agregarMuestraEnviada(muestra4);
-		u.agregarMuestraEnviada(muestra5);
-		u.agregarMuestraEnviada(muestra6);
-		u.agregarMuestraEnviada(muestra7);
-		u.agregarMuestraEnviada(muestra8);
-		u.agregarMuestraEnviada(muestra9);
-		u.agregarMuestraEnviada(muestra10);
-		u.agregarMuestraEnviada(muestra11);
+		sistema.agregarMuestra(muestra);
+		sistema.agregarMuestra(muestra2);
+		sistema.agregarMuestra(muestra3);
+		sistema.agregarMuestra(muestra4);
+		sistema.agregarMuestra(muestra5);
+		sistema.agregarMuestra(muestra6);
+		sistema.agregarMuestra(muestra7);
+		sistema.agregarMuestra(muestra8);
+		sistema.agregarMuestra(muestra9);
+		sistema.agregarMuestra(muestra10);
+		sistema.agregarMuestra(muestra11);
 
-		/*
-		 * se agregan las opiniones omitiendo el opinarMuestra, ya que al ser todas
-		 * sobre el mismo mock la logica de opinarMuestra no permitiria agregarlas
-		 */
-		u.agregarOpinionEnviada(opinion);
-		u.agregarOpinionEnviada(opinion2);
-		u.agregarOpinionEnviada(opinion3);
-		u.agregarOpinionEnviada(opinion4);
-		u.agregarOpinionEnviada(opinion5);
-		u.agregarOpinionEnviada(opinion6);
-		u.agregarOpinionEnviada(opinion7);
-		u.agregarOpinionEnviada(opinion8);
-		u.agregarOpinionEnviada(opinion9);
-		u.agregarOpinionEnviada(opinion10);
-		u.agregarOpinionEnviada(opinion11);
-		u.agregarOpinionEnviada(opinion12);
-		u.agregarOpinionEnviada(opinion13);
-		u.agregarOpinionEnviada(opinion14);
-		u.agregarOpinionEnviada(opinion15);
-		u.agregarOpinionEnviada(opinion16);
-		u.agregarOpinionEnviada(opinion17);
-		u.agregarOpinionEnviada(opinion18);
-		u.agregarOpinionEnviada(opinion19);
-		u.agregarOpinionEnviada(opinion20);
-		u.agregarOpinionEnviada(opinion21);
+		sistema.agregarOpinion(opinion);
+		sistema.agregarOpinion(opinion2);
+		sistema.agregarOpinion(opinion3);
+		sistema.agregarOpinion(opinion4);
+		sistema.agregarOpinion(opinion5);
+		sistema.agregarOpinion(opinion6);
+		sistema.agregarOpinion(opinion7);
+		sistema.agregarOpinion(opinion8);
+		sistema.agregarOpinion(opinion9);
+		sistema.agregarOpinion(opinion10);
+		sistema.agregarOpinion(opinion11);
+		sistema.agregarOpinion(opinion12);
+		sistema.agregarOpinion(opinion13);
+		sistema.agregarOpinion(opinion14);
+		sistema.agregarOpinion(opinion15);
+		sistema.agregarOpinion(opinion16);
+		sistema.agregarOpinion(opinion17);
+		sistema.agregarOpinion(opinion18);
+		sistema.agregarOpinion(opinion19);
+		sistema.agregarOpinion(opinion20);
+		sistema.agregarOpinion(opinion21);
 
 	}
 
@@ -165,12 +187,14 @@ public class ActualizadorDeCategoriaTestCase {
 		Foto foto = mock(Foto.class);
 		Ubicacion ubicacion = mock(Ubicacion.class);
 		Muestra muestraAjena = mock(Muestra.class);
-		assertFalse(u.isSubioAExperto());
-		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
-
-		u.opinarMuestra(muestraAjena, "ninguna");
-
-		assertTrue(u.isSubioAExperto());
+		Muestra muestraPropia = new Muestra("Vinchuca Infestans", foto, ubicacion, u, LocalDateTime.now());
+		Opinion opinionPropia = new Opinion(muestraAjena, u, LocalDateTime.now(), "ninguna");
+		sistema.recategorizar();
+		assertFalse(u.isExperto());
+		sistema.agregarMuestra(muestraPropia);
+		sistema.agregarOpinion(opinionPropia);
+		sistema.recategorizar();
+		assertTrue(u.isExperto());
 	}
 
 	@Test
@@ -179,15 +203,19 @@ public class ActualizadorDeCategoriaTestCase {
 		Ubicacion ubicacion = mock(Ubicacion.class);
 		Muestra muestraAjena = mock(Muestra.class);
 		Muestra muestraAjena2 = mock(Muestra.class);
-		assertFalse(u.isSubioAExperto());
+		Opinion opinionPropia = new Opinion(muestraAjena, u, LocalDateTime.now(), "ninguna");
+		Opinion opinionPropia2 = new Opinion(muestraAjena2, u, LocalDateTime.now(), "ninguna");
+		Muestra muestraPropia = new Muestra("Vinchuca Infestans", foto, ubicacion, u, LocalDateTime.now());
+		Muestra muestraPropia2 = new Muestra("Vinchuca Infestans", foto, ubicacion, u, LocalDateTime.now());
+		assertFalse(u.isExperto());
 
-		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
-		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
+		sistema.agregarMuestra(muestraPropia);
+		sistema.agregarMuestra(muestraPropia2);
 
-		u.opinarMuestra(muestraAjena, "ninguna");
-		u.opinarMuestra(muestraAjena2, "Chinche Foliada");
-
-		assertTrue(u.isSubioAExperto());
+		sistema.agregarOpinion(opinionPropia);
+		sistema.agregarOpinion(opinionPropia2);
+		sistema.recategorizar();
+		assertTrue(u.isExperto());
 	}
 
 	/*
@@ -200,10 +228,11 @@ public class ActualizadorDeCategoriaTestCase {
 	public void testSoloAgregarMuestraConMenosDe30Dias() {
 		Foto foto = mock(Foto.class);
 		Ubicacion ubicacion = mock(Ubicacion.class);
-		assertFalse(u.isSubioAExperto());
-		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
-
-		assertFalse(u.isSubioAExperto());
+		Muestra muestraPropia = new Muestra("Vinchuca Infestans", foto, ubicacion, u, LocalDateTime.now());
+		assertFalse(u.isExperto());
+		sistema.agregarMuestra(muestraPropia);
+		sistema.recategorizar();
+		assertFalse(u.isExperto());
 
 	}
 
@@ -211,27 +240,31 @@ public class ActualizadorDeCategoriaTestCase {
 	public void test11MuestrasConMenosDe30Dias() {
 		Foto foto = mock(Foto.class);
 		Ubicacion ubicacion = mock(Ubicacion.class);
-		assertEquals(u.getObservador().muestrasEnviadasLosUltimos30Dias().size(), 10);
-		u.cargarMuestra("Vinchuca Infestans", foto, ubicacion);
-		assertEquals(u.getObservador().muestrasEnviadasLosUltimos30Dias().size(), 11);
+		Muestra muestraPropia = new Muestra("Vinchuca Infestans", foto, ubicacion, u, LocalDateTime.now());
+		assertEquals(sistema.getRecategorizador().muestrasEnviadasLosUltimos30Dias(u).size(), 10);
+		sistema.agregarMuestra(muestraPropia);
+		assertEquals(sistema.getRecategorizador().muestrasEnviadasLosUltimos30Dias(u).size(), 10);
 
 	}
 
 	@Test
 	public void test21OpinionesConMenosDe30Dias() {
 		Muestra muestraAjena = mock(Muestra.class);
-		assertEquals(u.getObservador().opinionesEnviadasLosUltimos30Dias().size(), 20);
-		u.opinarMuestra(muestraAjena, "ninguna");
-		assertEquals(u.getObservador().opinionesEnviadasLosUltimos30Dias().size(), 21);
+		Opinion opinionPropia = new Opinion(muestraAjena, u, LocalDateTime.now(), "ninguna");
+		assertEquals(sistema.getRecategorizador().opinionesEnviadasLosUltimos30Dias(u).size(), 20);
+		sistema.agregarOpinion(opinionPropia);
+		assertEquals(sistema.getRecategorizador().opinionesEnviadasLosUltimos30Dias(u).size(), 21);
 
 	}
 
 	@Test
 	public void testSoloAgregarOpinionConMenosDe30Dias() {
 		Muestra muestraAjena = mock(Muestra.class);
-		assertFalse(u.isSubioAExperto());
-		u.opinarMuestra(muestraAjena, "ninguna");
-		assertFalse(u.isSubioAExperto());
+		Opinion opinionPropia = new Opinion(muestraAjena, u, LocalDateTime.now(), "ninguna");
+		assertFalse(u.isExperto());
+		sistema.agregarOpinion(opinionPropia);
+		sistema.recategorizar();
+		assertFalse(u.isExperto());
 	}
 
 }

@@ -24,6 +24,10 @@ public class Muestra {
 	public Usuario getUsuarioRecolectador() {
 		return usuarioRecolectador;
 	}
+	
+	public String getEspecie() {
+		return especie;
+	}
 
 	public LocalDateTime getFecha() {
 		return fecha;
