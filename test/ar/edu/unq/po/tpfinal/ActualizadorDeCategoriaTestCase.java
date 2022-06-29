@@ -81,24 +81,24 @@ public class ActualizadorDeCategoriaTestCase {
 		Muestra muestraAjena21 = mock(Muestra.class);
 		actualizador = new ActualizadorDeCategoria();
 		u = new UsuarioRegular();
-		UsuarioRegular u2 = mock(UsuarioRegular.class);
+
 		sistema = new Sistema();
 		buscador = new Buscador();
 		sistema.setRecategorizador(actualizador);
 		sistema.setBuscador(buscador);
 		sistema.agregarUsuario(u);
 
-		muestra = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, fecha);
-		muestra2 = new Muestra("Vinchuca Sordida", foto, ubicacion, u2, fecha);
-		muestra3 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u2, fecha);
-		muestra4 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, fecha);
-		muestra5 = new Muestra("Vinchuca Sordida", foto, ubicacion, u2, fecha);
-		muestra6 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, fecha);
-		muestra7 = new Muestra("Vinchuca Sordida", foto, ubicacion, u2, fecha);
-		muestra8 = new Muestra("Vinchuca Sordida", foto, ubicacion, u2, fecha);
-		muestra9 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, fecha);
-		muestra10 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u2, fecha);
-		muestra11 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u2, fecha2);
+		muestra = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
+		muestra2 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
+		muestra3 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u, fecha);
+		muestra4 = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
+		muestra5 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
+		muestra6 = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
+		muestra7 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
+		muestra8 = new Muestra("Vinchuca Sordida", foto, ubicacion, u, fecha);
+		muestra9 = new Muestra("Vinchuca Infestans", foto, ubicacion, u, fecha);
+		muestra10 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u, fecha);
+		muestra11 = new Muestra("Vinchuca Guasayana", foto, ubicacion, u, fecha2);
 		opinion = new Opinion(muestraAjena, u, fecha, "Vinchuca Guasayana");
 		opinion2 = new Opinion(muestraAjena2, u, fecha, "Vinchuca Infestans");
 		opinion3 = new Opinion(muestraAjena3, u, fecha, "ninguna");
@@ -183,6 +183,16 @@ public class ActualizadorDeCategoriaTestCase {
 	 */
 
 	@Test
+	public void testElSistemaReconocioLasMuestrasEnviadas() {
+		assertEquals(sistema.getMuestras().size(), 11);
+	}
+
+	@Test
+	public void testElSistemaReconoceDeQuienSonLasMuestras() {
+		assertEquals(u.getMuestrasEnviadas().size(), 11);
+	}
+
+	@Test
 	public void testAgregarMuestraYOpinionDentroDeLos30Dias() {
 		Foto foto = mock(Foto.class);
 		Ubicacion ubicacion = mock(Ubicacion.class);
@@ -243,7 +253,7 @@ public class ActualizadorDeCategoriaTestCase {
 		Muestra muestraPropia = new Muestra("Vinchuca Infestans", foto, ubicacion, u, LocalDateTime.now());
 		assertEquals(sistema.getRecategorizador().muestrasEnviadasLosUltimos30Dias(u).size(), 10);
 		sistema.agregarMuestra(muestraPropia);
-		assertEquals(sistema.getRecategorizador().muestrasEnviadasLosUltimos30Dias(u).size(), 10);
+		assertEquals(sistema.getRecategorizador().muestrasEnviadasLosUltimos30Dias(u).size(), 11);
 
 	}
 
