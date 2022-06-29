@@ -20,8 +20,7 @@ public class Muestra {
 	private boolean verificada;
 	// Contiene a todas las especies y la cantidad de votos que posee cada una
 	private HashMap<String, Integer> especiesXcant = new HashMap<>();
-	
-	
+
 	public Usuario getUsuarioRecolectador() {
 		return usuarioRecolectador;
 	}
@@ -42,7 +41,7 @@ public class Muestra {
 		this.opiniones.add(opinion);
 		this.agregarOcurrenciaEspecie(opinion.getEspecie());
 	}
-	
+
 	// Agrego una ocurrencia de la especie al map
 	private void agregarOcurrenciaEspecie(String especie) {
 		this.getEspeciesXCant().putIfAbsent(especie, 0);
@@ -68,16 +67,16 @@ public class Muestra {
 		this.verificada = false;
 
 		// La opinion del usuario recolectador tambien debe tenerse en cuenta
-		this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this, this.especie);
-		// this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha,
-		// this.especie, this.usuarioRecolectador.esExperto()));
+		// this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this,
+		// this.especie);
+		this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha, this.especie));
 	}
 
 	// Indica si al menos 2 usuarios expertos tienen la misma opinion
 	public boolean estaVerificada() {
-		return verificada;
+		return false;
 	}
-	
+
 	// Permite cambiar el estado de verificacion de la muestra
 	public void setVerificada(Boolean verificada) {
 		this.verificada = verificada;
@@ -95,9 +94,8 @@ public class Muestra {
 	public String resultadoActual() {
 		if (hayEmpate(this.getEspeciesXCant())) {
 			return "No definido";
-		}
-		else {
-			//Obtengo la entrada del map con el numero mas grande de votos
+		} else {
+			// Obtengo la entrada del map con el numero mas grande de votos
 			Map.Entry<String, Integer> me = Collections.max(especiesXcant.entrySet(), Map.Entry.comparingByValue());
 			return me.getKey();
 		}
@@ -113,15 +111,15 @@ public class Muestra {
 	public boolean tieneMenosDe30Dias() {
 		return this.getFecha().isAfter(LocalDateTime.now().minusDays(30));
 	}
-	
+
 	public LocalDateTime getFechaUltimaVotacion() {
-		return this.getOpiniones().stream().max(Comparator.comparing(Opinion::getFecha)).get().getFecha(); 
+		return this.getOpiniones().stream().max(Comparator.comparing(Opinion::getFecha)).get().getFecha();
 	}
-	
+
 	public Ubicacion getUbicacion() {
 		return ubicacion;
 	}
-	
+
 	private Map<String, Integer> getEspeciesXCant() {
 		return especiesXcant;
 	}

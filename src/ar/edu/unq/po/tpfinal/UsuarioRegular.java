@@ -6,7 +6,7 @@ public class UsuarioRegular extends Usuario {
 
 	private boolean subioAExperto = false;
 
-	public boolean isSubioAExperto() {
+	public boolean isExperto() {
 		return subioAExperto;
 	}
 
@@ -15,20 +15,13 @@ public class UsuarioRegular extends Usuario {
 		this.subioAExperto = subioAExperto;
 	}
 
-	@Override
-	public void opinar(Muestra muestra, String especie) {
-
-		Opinion opinion = new Opinion(muestra, this, LocalDateTime.now(), especie, this.isSubioAExperto());
-		this.agregarOpinionEnviada(opinion);
-		muestra.agregarOpinion(opinion);
-
-	}
-
-	@Override
-	public void enviarMuestra(Muestra muestraAEnviar) {
-		this.agregarMuestraEnviada(muestraAEnviar);
-
-	}
+	/*
+	 * @Override public void enviarMuestra(Muestra muestraAEnviar) {
+	 * this.agregarMuestraEnviada(muestraAEnviar);
+	 * 
+	 * }
+	 * 
+	 */
 
 	/*
 	 * verifica que, en caso de ser experto, la muestra no este verificada, el

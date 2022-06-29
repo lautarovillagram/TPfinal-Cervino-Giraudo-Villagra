@@ -29,25 +29,24 @@ public class Opinion {
 	/*
 	 * constructor para la opinion de los usuarios regulares
 	 */
-	public Opinion(Muestra muestraAOpinar, Usuario usuarioOpinador, LocalDateTime fecha, String tipo,
-			boolean esOpinionExperta) {
+	public Opinion(Muestra muestraAOpinar, Usuario usuarioOpinador, LocalDateTime fecha, String tipo) {
 		this.muestraOpinada = muestraAOpinar;
 		this.usuarioOpinador = usuarioOpinador;
 		this.setFecha(fecha);
 		this.especie = tipo;
-		this.setEsOpinionExperta(esOpinionExperta);
+		this.setEsOpinionExperta(usuarioOpinador.isExperto());
 	}
 
 	/*
 	 * constructor para la opinion de los usuarios expertos
 	 */
-	public Opinion(Muestra muestraAOpinar, Usuario usuarioOpinador, LocalDateTime fecha, String tipo) {
-		this.muestraOpinada = muestraAOpinar;
-		this.usuarioOpinador = usuarioOpinador;
-		this.fecha = fecha;
-		this.especie = tipo;
-		this.setEsOpinionExperta(true);
-	}
+
+	/*
+	 * public Opinion(Muestra muestraAOpinar, Usuario usuarioOpinador, LocalDateTime
+	 * fecha, String tipo) { this.muestraOpinada = muestraAOpinar;
+	 * this.usuarioOpinador = usuarioOpinador; this.fecha = fecha; this.especie =
+	 * tipo; this.setEsOpinionExperta(true); }
+	 */
 
 	public boolean esOpinionExperta() {
 		return esOpinionExperta;

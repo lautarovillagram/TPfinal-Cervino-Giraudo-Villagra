@@ -39,6 +39,7 @@ public class Sistema {
 
 			this.getOpiniones().add(o);
 			o.getUsuarioOpinador().agregarOpinionEnviada(o);
+			o.getMuestraOpinada().agregarOpinion(o);
 		}
 	}
 

@@ -19,7 +19,8 @@ public abstract class Usuario {
 	}
 
 	public List<Opinion> getOpinionesEnviadas() {
-		return opinionesEnviadas.stream().filter(o -> o.getMuestraOpinada().getUsuarioRecolectador() != this).collect(Collectors.toList());
+		return opinionesEnviadas.stream().filter(o -> o.getMuestraOpinada().getUsuarioRecolectador() != this)
+				.collect(Collectors.toList());
 	}
 
 	public void agregarOpinionEnviada(Opinion opinion) {
@@ -33,46 +34,43 @@ public abstract class Usuario {
 	 * que envió
 	 */
 
-	public void cargarMuestra(String especie, Foto foto, Ubicacion ubicacionActual) {
-		Especies especies = new Especies();
-		if (especies.esUnaCategoria(especie)) {
-			this.enviarMuestra(new Muestra(especie, foto, ubicacionActual, this, LocalDateTime.now()));
-		} else {
-			System.out.println("la categoria no es valida");
-		}
-
-	}
-
-	public void enviarMuestra(Muestra muestraAEnviar) {
-		this.agregarMuestraEnviada(muestraAEnviar);
-	}
-
 	/*
+	 * public void cargarMuestra(String especie, Foto foto, Ubicacion
+	 * ubicacionActual) { Especies especies = new Especies(); if
+	 * (especies.esUnaCategoria(especie)) { this.enviarMuestra(new Muestra(especie,
+	 * foto, ubicacionActual, this, LocalDateTime.now())); } else {
+	 * System.out.println("la categoria no es valida"); }
+	 * 
+	 * }
+	 * 
+	 * public void enviarMuestra(Muestra muestraAEnviar) {
+	 * this.agregarMuestraEnviada(muestraAEnviar); }
+	 * 
+	 * 
+	 * 
+	 * 
 	 * Permite opinar en una muestra siempre y cuando esta no haya sido verificada,
 	 * no sea propia del usuario y todavia no haya opinado. tambien se asegura de
 	 * que la especie existe
 	 */
 
-	public void opinarMuestra(Muestra muestraAOpinar, String especie) {
-		Especies especies = new Especies();
-		if (this.puedeOpinarEn(muestraAOpinar) && especies.esUnaCategoria(especie)) {
-			this.opinar(muestraAOpinar, especie);
-		} else {
-			System.out.println("El usuario no puede opinar o la categoria es invalida");
-		}
-
-	}
-
-	public void agregarOpinionAMuestraPropia(Muestra muestraAOpinar, String especie) {
-		Especies especies = new Especies();
-		if (especies.getCategorias().contains(especie)) {
-			this.opinar(muestraAOpinar, especie);
-		} else {
-			System.out.println("la categoria es invalida");
-		}
-	}
-
-	public abstract void opinar(Muestra muestra, String especie);
+	/*
+	 * 
+	 * public void opinarMuestra(Muestra muestraAOpinar, String especie) { Especies
+	 * especies = new Especies(); if (this.puedeOpinarEn(muestraAOpinar) &&
+	 * especies.esUnaCategoria(especie)) { this.opinar(muestraAOpinar, especie); }
+	 * else {
+	 * System.out.println("El usuario no puede opinar o la categoria es invalida");
+	 * }
+	 * 
+	 * }
+	 * 
+	 * 
+	 * public void agregarOpinionAMuestraPropia(Muestra muestraAOpinar, String
+	 * especie) { Especies especies = new Especies(); if
+	 * (especies.getCategorias().contains(especie)) { this.opinar(muestraAOpinar,
+	 * especie); } else { System.out.println("la categoria es invalida"); } }
+	 */
 
 	public abstract boolean puedeOpinarEn(Muestra muestra);
 
@@ -86,7 +84,9 @@ public abstract class Usuario {
 	public boolean yaOpino(Muestra muestra) {
 		return this.getOpinionesEnviadas().stream().anyMatch(o -> o.getMuestraOpinada() == muestra);
 	}
-	
+
 	public abstract void setSubioAExperto(boolean subioAExperto);
+
+	public abstract boolean isExperto();
 
 }
