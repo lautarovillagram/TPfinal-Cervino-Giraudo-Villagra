@@ -17,14 +17,15 @@ public class Muestra {
 	private LocalDateTime fecha;
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	// private List<String> opinionesExpertas = new ArrayList<String>();
-	private boolean verificada;
+	private boolean verificada = false;
 	// Contiene a todas las especies y la cantidad de votos que posee cada una
 	private HashMap<String, Integer> especiesXcant = new HashMap<>();
+	private StateVerificacion verificador;
 
 	public Usuario getUsuarioRecolectador() {
 		return usuarioRecolectador;
 	}
-	
+
 	public String getEspecie() {
 		return especie;
 	}
@@ -68,7 +69,7 @@ public class Muestra {
 		this.ubicacion = ubicacion;
 		this.usuarioRecolectador = usuarioRecolectador;
 		this.fecha = fecha;
-		this.verificada = false;
+		this.verificador = new StateVerificado();
 
 		// La opinion del usuario recolectador tambien debe tenerse en cuenta
 		// this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this,
