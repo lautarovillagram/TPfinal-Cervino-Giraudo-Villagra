@@ -47,8 +47,9 @@ public class MuestraTestCase {
 		opinion6 = new Opinion(muestra, u4, LocalDateTime.now(), "Chinche Foliada");
 		sistema.agregarMuestra(muestra);
 	}
-	
-	@Test public void testLaMuestraEsNoVerificada() {
+
+	@Test
+	public void testLaMuestraEsNoVerificada() {
 		assertFalse(muestra.estaVerificada());
 	}
 
@@ -60,7 +61,7 @@ public class MuestraTestCase {
 	@Test
 	public void testSiHayEmpateEnLasOpinionesDeUnaMuestraElResultadoEsNoDefinido() {
 		sistema.agregarOpinion(opinion1);
-	//	sistema.agregarOpinion(opinion2);
+		// sistema.agregarOpinion(opinion2);
 
 		assertEquals("No definido", muestra.resultadoActualv2());
 	}
@@ -96,7 +97,7 @@ public class MuestraTestCase {
 		sistema.agregarOpinion(opinion6);
 		assertTrue(muestra.estaVerificada());
 	}
-	
+
 	@Test
 	public void testLaEspecieOriginalComoResultadoActual() {
 		assertEquals(muestra.getEspecie(), muestra.resultadoActualv2());
@@ -123,4 +124,5 @@ public class MuestraTestCase {
 	public void testUnaMuestraPuedeConocerSuUbicacion() {
 		assertEquals(ubicacion, muestra.getUbicacion());
 	}
+
 }
