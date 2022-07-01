@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Opinion implements Comparable<Opinion> {
+public class Opinion {
 	private Muestra muestraOpinada;
 
 	private Usuario usuarioOpinador;
@@ -68,32 +68,6 @@ public class Opinion implements Comparable<Opinion> {
 
 	public boolean esOpinionValida() {
 		return !(this.getUsuarioOpinador().puedeOpinarEn(muestraOpinada));
-	}
-
-	@Override
-	public int compareTo(Opinion o) {
-
-		int compareInt = this.getEspecie().compareTo(o.getEspecie());
-		if (compareInt < 0)
-			return -1;
-		if (compareInt > 0)
-			return 1;
-		return 0;
-
-	}
-
-	public int compareTo(Opinion o, Muestra m) {
-		List<Opinion> cantidad = m.getOpiniones().stream().filter(op -> op.getEspecie() == this.getEspecie())
-				.collect(Collectors.toList());
-		List<Opinion> cantidad2 = m.getOpiniones().stream().filter(op -> op.getEspecie() == o.getEspecie())
-				.collect(Collectors.toList());
-		if (cantidad.size() < cantidad2.size() && this.getEspecie() != o.getEspecie())
-			return -1;
-
-		if (cantidad.size() > cantidad2.size() && this.getEspecie() != o.getEspecie())
-			return 1;
-
-		return 0;
 	}
 
 	public String toString() {
