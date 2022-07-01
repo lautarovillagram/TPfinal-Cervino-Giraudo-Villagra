@@ -12,6 +12,7 @@ public class AgregarOpinionTestCase {
 	private UsuarioRegular u2;
 	private UsuarioExperto u3;
 	private UsuarioExperto u4;
+	private UsuarioExperto u5;
 
 	private Muestra muestra1;
 	private Muestra muestra2;
@@ -21,6 +22,8 @@ public class AgregarOpinionTestCase {
 	private Opinion opinion3;
 	private Opinion opinion4;
 	private Opinion opinion5;
+	private Opinion opinion6;
+	private Opinion opinion7;
 	private Sistema sistema;
 	private ActualizadorDeCategoria recategorizador;
 	private Ubicacion ubicacion;
@@ -31,6 +34,7 @@ public class AgregarOpinionTestCase {
 		u2 = new UsuarioRegular();
 		u3 = new UsuarioExperto();
 		u4 = new UsuarioExperto();
+		u5 = new UsuarioExperto();
 		Ubicacion ubicacion = mock(Ubicacion.class);
 		Foto foto = mock(Foto.class);
 		recategorizador = new ActualizadorDeCategoria();
@@ -45,6 +49,9 @@ public class AgregarOpinionTestCase {
 		opinion3 = new Opinion(muestra1, u3, LocalDateTime.now(), "ninguna");
 		opinion4 = new Opinion(muestra1, u4, LocalDateTime.now(), "Vinchuca Infestans");
 		opinion5 = new Opinion(muestra1, u1, LocalDateTime.now(), "binchuk infektans");
+		opinion6 = new Opinion(muestra2, u4, LocalDateTime.now(), "Vinchuca Sordida");
+		opinion7 = new Opinion(muestra2, u5, LocalDateTime.now(), "ninguna");
+
 		sistema.agregarMuestra(muestra1);
 		sistema.agregarMuestra(muestra2);
 
@@ -79,7 +86,19 @@ public class AgregarOpinionTestCase {
 		sistema.agregarOpinion(opinion4);
 		assertEquals(sistema.getOpiniones().size(), 2);
 	}
-	
+
+	@Test
+	public void testAgregarOpinionExpertaDespuesDeVerificarLaMuestra() {
+		assertFalse(muestra2.estaVerificada());
+		sistema.agregarOpinion(opinion6);
+
+		assertTrue(muestra2.estaVerificada());
+		assertEquals(sistema.getOpiniones().size(), 1);
+		sistema.agregarOpinion(opinion7);
+		assertEquals(sistema.getOpiniones().size(), 1);
+
+	}
+
 	@Test
 	public void testAgregarOpinionConEspecieMalEscrita() {
 		assertEquals(sistema.getOpiniones().size(), 0);
