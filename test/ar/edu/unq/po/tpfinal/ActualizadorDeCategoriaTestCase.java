@@ -44,8 +44,10 @@ public class ActualizadorDeCategoriaTestCase {
 	private ActualizadorDeCategoria actualizador;
 	private Buscador buscador;
 	private UsuarioRegular u;
+	private UsuarioRegular u2;
 
 	private Sistema sistema;
+	private StateVerificacion verificador;
 
 	/*
 	 * el setup agrega 10 muestras con menos de 30 dias de antiguedad y 1 con mas de
@@ -58,27 +60,30 @@ public class ActualizadorDeCategoriaTestCase {
 		LocalDateTime fecha2 = LocalDateTime.now().minusDays(31);
 		Ubicacion ubicacion = mock(Ubicacion.class);
 		Foto foto = mock(Foto.class);
-		Muestra muestraAjena = mock(Muestra.class);
-		Muestra muestraAjena2 = mock(Muestra.class);
-		Muestra muestraAjena3 = mock(Muestra.class);
-		Muestra muestraAjena4 = mock(Muestra.class);
-		Muestra muestraAjena5 = mock(Muestra.class);
-		Muestra muestraAjena6 = mock(Muestra.class);
-		Muestra muestraAjena7 = mock(Muestra.class);
-		Muestra muestraAjena8 = mock(Muestra.class);
-		Muestra muestraAjena9 = mock(Muestra.class);
-		Muestra muestraAjena10 = mock(Muestra.class);
-		Muestra muestraAjena11 = mock(Muestra.class);
-		Muestra muestraAjena12 = mock(Muestra.class);
-		Muestra muestraAjena13 = mock(Muestra.class);
-		Muestra muestraAjena14 = mock(Muestra.class);
-		Muestra muestraAjena15 = mock(Muestra.class);
-		Muestra muestraAjena16 = mock(Muestra.class);
-		Muestra muestraAjena17 = mock(Muestra.class);
-		Muestra muestraAjena18 = mock(Muestra.class);
-		Muestra muestraAjena19 = mock(Muestra.class);
-		Muestra muestraAjena20 = mock(Muestra.class);
-		Muestra muestraAjena21 = mock(Muestra.class);
+		u2 = new UsuarioRegular();
+		Muestra muestraAjena = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena2 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+
+		Muestra muestraAjena3 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+
+		Muestra muestraAjena4 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena5 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena6 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena7 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena8 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena9 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena10 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena11 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena12 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena13 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena14 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena15 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena16 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena17 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena18 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena19 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena20 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena21 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
 		actualizador = new ActualizadorDeCategoria();
 		u = new UsuarioRegular();
 
@@ -196,7 +201,7 @@ public class ActualizadorDeCategoriaTestCase {
 	public void testAgregarMuestraYOpinionDentroDeLos30Dias() {
 		Foto foto = mock(Foto.class);
 		Ubicacion ubicacion = mock(Ubicacion.class);
-		Muestra muestraAjena = mock(Muestra.class);
+		Muestra muestraAjena = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
 		Muestra muestraPropia = new Muestra("Vinchuca Infestans", foto, ubicacion, u, LocalDateTime.now());
 		Opinion opinionPropia = new Opinion(muestraAjena, u, LocalDateTime.now(), "ninguna");
 		sistema.recategorizar();
@@ -211,8 +216,8 @@ public class ActualizadorDeCategoriaTestCase {
 	public void testAgregarMuestrasYOpinionesDentroDeLos30Dias() {
 		Foto foto = mock(Foto.class);
 		Ubicacion ubicacion = mock(Ubicacion.class);
-		Muestra muestraAjena = mock(Muestra.class);
-		Muestra muestraAjena2 = mock(Muestra.class);
+		Muestra muestraAjena = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
+		Muestra muestraAjena2 = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
 		Opinion opinionPropia = new Opinion(muestraAjena, u, LocalDateTime.now(), "ninguna");
 		Opinion opinionPropia2 = new Opinion(muestraAjena2, u, LocalDateTime.now(), "ninguna");
 		Muestra muestraPropia = new Muestra("Vinchuca Infestans", foto, ubicacion, u, LocalDateTime.now());
@@ -259,7 +264,9 @@ public class ActualizadorDeCategoriaTestCase {
 
 	@Test
 	public void test21OpinionesConMenosDe30Dias() {
-		Muestra muestraAjena = mock(Muestra.class);
+		Foto foto = mock(Foto.class);
+		Ubicacion ubicacion = mock(Ubicacion.class);
+		Muestra muestraAjena = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
 		Opinion opinionPropia = new Opinion(muestraAjena, u, LocalDateTime.now(), "ninguna");
 		assertEquals(sistema.getRecategorizador().opinionesEnviadasLosUltimos30Dias(u).size(), 20);
 		sistema.agregarOpinion(opinionPropia);
@@ -269,7 +276,9 @@ public class ActualizadorDeCategoriaTestCase {
 
 	@Test
 	public void testSoloAgregarOpinionConMenosDe30Dias() {
-		Muestra muestraAjena = mock(Muestra.class);
+		Foto foto = mock(Foto.class);
+		Ubicacion ubicacion = mock(Ubicacion.class);
+		Muestra muestraAjena = new Muestra("Vinchuca Infestans", foto, ubicacion, u2, LocalDateTime.now());
 		Opinion opinionPropia = new Opinion(muestraAjena, u, LocalDateTime.now(), "ninguna");
 		assertFalse(u.isExperto());
 		sistema.agregarOpinion(opinionPropia);

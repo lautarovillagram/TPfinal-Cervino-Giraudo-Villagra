@@ -47,18 +47,22 @@ public class MuestraTestCase {
 		opinion6 = new Opinion(muestra, u4, LocalDateTime.now(), "Chinche Foliada");
 		sistema.agregarMuestra(muestra);
 	}
+	
+	@Test public void testLaMuestraEsNoVerificada() {
+		assertFalse(muestra.estaVerificada());
+	}
 
 	@Test
 	public void testSiUnaMuestraNoTieneOpinionesSuResultadoActualEsIgualAlDadoPorSuUsuarioRecolectador() {
-		assertEquals("Vinchuca Infestans", muestra.resultadoActual());
+		assertEquals("Vinchuca Infestans", muestra.resultadoActualv2());
 	}
 
 	@Test
 	public void testSiHayEmpateEnLasOpinionesDeUnaMuestraElResultadoEsNoDefinido() {
 		sistema.agregarOpinion(opinion1);
-		sistema.agregarOpinion(opinion2);
+	//	sistema.agregarOpinion(opinion2);
 
-		assertEquals("No definido", muestra.resultadoActual());
+		assertEquals("No definido", muestra.resultadoActualv2());
 	}
 
 	@Test
@@ -66,7 +70,7 @@ public class MuestraTestCase {
 		sistema.agregarOpinion(opinion1);
 		sistema.agregarOpinion(opinion3);
 
-		assertEquals("Vinchuca Infestans", muestra.resultadoActual());
+		assertEquals("Vinchuca Infestans", muestra.resultadoActualv2());
 	}
 
 	@Test
@@ -91,6 +95,11 @@ public class MuestraTestCase {
 		sistema.agregarOpinion(opinion4);
 		sistema.agregarOpinion(opinion6);
 		assertTrue(muestra.estaVerificada());
+	}
+	
+	@Test
+	public void testLaEspecieOriginalComoResultadoActual() {
+		assertEquals(muestra.getEspecie(), muestra.resultadoActualv2());
 	}
 
 	@Test

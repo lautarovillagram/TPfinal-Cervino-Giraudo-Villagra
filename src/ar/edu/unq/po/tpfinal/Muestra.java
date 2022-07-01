@@ -17,7 +17,6 @@ public class Muestra {
 	private LocalDateTime fecha;
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	// private List<String> opinionesExpertas = new ArrayList<String>();
-	private boolean verificada = false;
 	// Contiene a todas las especies y la cantidad de votos que posee cada una
 	private HashMap<String, Integer> especiesXcant = new HashMap<>();
 	private StateVerificacion verificador;
@@ -69,23 +68,45 @@ public class Muestra {
 		this.ubicacion = ubicacion;
 		this.usuarioRecolectador = usuarioRecolectador;
 		this.fecha = fecha;
-		this.verificador = new StateVerificado();
+		if (usuarioRecolectador.isExperto()) {
+			this.setVerificador(new StateVerificadoParcialmente());
+
+		} else {
+			this.setVerificador(new StateNoVerificado());
+
+		}
 
 		// La opinion del usuario recolectador tambien debe tenerse en cuenta
 		// this.getUsuarioRecolectador().agregarOpinionAMuestraPropia(this,
 		// this.especie);
-		this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha, this.especie));
+		// this.agregarOpinion(new Opinion(this, this.usuarioRecolectador, this.fecha,
+		// this.especie));
+
 	}
 
 	// Indica si al menos 2 usuarios expertos tienen la misma opinion
 	public boolean estaVerificada() {
-		return false;
+		if (this.getVerificador().getState() == "Verificada") {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public StateVerificacion getVerificador() {
+		return this.verificador;
+	}
+
+	public void setVerificador(StateVerificacion nuevoEstadoDeVerificacion) {
+		this.verificador = nuevoEstadoDeVerificacion;
+	}
+
+	public String estadoDeVerificacion() {
+		return this.getVerificador().getState();
 	}
 
 	// Permite cambiar el estado de verificacion de la muestra
-	public void setVerificada(Boolean verificada) {
-		this.verificada = verificada;
-	}
 
 	public boolean opinoUnExperto() {
 		return this.opinionesDeExpertos().size() >= 1;
@@ -94,6 +115,10 @@ public class Muestra {
 
 	public List<Opinion> opinionesDeExpertos() {
 		return this.getOpiniones().stream().filter(o -> o.esOpinionExperta()).collect(Collectors.toList());
+	}
+
+	public String resultadoActualv2() {
+		return this.getVerificador().resultadoActual(this);
 	}
 
 	public String resultadoActual() {
@@ -128,4 +153,5 @@ public class Muestra {
 	private Map<String, Integer> getEspeciesXCant() {
 		return especiesXcant;
 	}
+
 }

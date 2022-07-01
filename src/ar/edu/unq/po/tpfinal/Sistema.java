@@ -28,11 +28,17 @@ public class Sistema {
 			this.getMuestras().add(m);
 			m.getUsuarioRecolectador().agregarMuestraEnviada(m);
 			this.getBuscador().agregarMuestra(m);
+			this.agregarOpinionInicial(new Opinion(m, m.getUsuarioRecolectador(), m.getFecha(), m.getEspecie()));
+
 			for (ZonaDeCobertura z : this.getZonasDeCobertura()) {
 				z.agregarMuestra(m); // agregarMuestra se encarga de comprobar si la muestra pertenece antes de
 										// agregarla
 			}
 		}
+	}
+
+	public void actualizarStateDeLaMuestra(Muestra muestra) {
+
 	}
 
 	public void agregarOpinion(Opinion o) {
@@ -43,7 +49,13 @@ public class Sistema {
 			this.getOpiniones().add(o);
 			o.getUsuarioOpinador().agregarOpinionEnviada(o);
 			o.getMuestraOpinada().agregarOpinion(o);
+			o.getMuestraOpinada().getVerificador().actualizarVerificacion(o.getMuestraOpinada());
 		}
+	}
+
+	public void agregarOpinionInicial(Opinion o) {
+		o.getMuestraOpinada().agregarOpinion(o);
+
 	}
 
 	public void setRecategorizador(ActualizadorDeCategoria actualizador) {
