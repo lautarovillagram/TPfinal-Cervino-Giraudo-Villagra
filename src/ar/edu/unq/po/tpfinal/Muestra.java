@@ -2,11 +2,8 @@ package ar.edu.unq.po.tpfinal;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Muestra {
@@ -17,8 +14,6 @@ public class Muestra {
 	private LocalDateTime fecha;
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	// private List<String> opinionesExpertas = new ArrayList<String>();
-	// Contiene a todas las especies y la cantidad de votos que posee cada una
-	private HashMap<String, Integer> especiesXcant = new HashMap<>();
 	private StateVerificacion verificador;
 
 	public Usuario getUsuarioRecolectador() {
@@ -42,14 +37,7 @@ public class Muestra {
 	}
 
 	public void agregarOpinion(Opinion opinion) {
-		this.opiniones.add(opinion);
-		this.agregarOcurrenciaEspecie(opinion.getEspecie());
-	}
-
-	// Agrego una ocurrencia de la especie al map
-	private void agregarOcurrenciaEspecie(String especie) {
-		this.getEspeciesXCant().putIfAbsent(especie, 0);
-		this.getEspeciesXCant().put(especie, this.getEspeciesXCant().get(especie) + 1);
+		this.getVerificador().agregarOpinion(opinion);
 	}
 
 	/*
@@ -69,10 +57,10 @@ public class Muestra {
 		this.usuarioRecolectador = usuarioRecolectador;
 		this.fecha = fecha;
 		if (usuarioRecolectador.isExperto()) {
-			this.setVerificador(new StateVerificadoParcialmente());
+			this.setVerificador(new StateVerificadoParcialmente(this));
 
 		} else {
-			this.setVerificador(new StateNoVerificado());
+			this.setVerificador(new StateNoVerificado(this));
 
 		}
 
@@ -86,12 +74,7 @@ public class Muestra {
 
 	// Indica si al menos 2 usuarios expertos tienen la misma opinion
 	public boolean estaVerificada() {
-		if (this.getVerificador().getState() == "Verificada") {
-			return true;
-		} else {
-			return false;
-		}
-
+		return getVerificador().estaVerificada();
 	}
 
 	public StateVerificacion getVerificador() {
@@ -102,12 +85,6 @@ public class Muestra {
 		this.verificador = nuevoEstadoDeVerificacion;
 	}
 
-	public String estadoDeVerificacion() {
-		return this.getVerificador().getState();
-	}
-
-	// Permite cambiar el estado de verificacion de la muestra
-
 	public boolean opinoUnExperto() {
 		return this.opinionesDeExpertos().size() >= 1;
 
@@ -117,25 +94,8 @@ public class Muestra {
 		return this.getOpiniones().stream().filter(o -> o.esOpinionExperta()).collect(Collectors.toList());
 	}
 
-	public String resultadoActualv2() {
-		return this.getVerificador().resultadoActual(this);
-	}
-
 	public String resultadoActual() {
-		if (hayEmpate(this.getEspeciesXCant())) {
-			return "No definido";
-		} else {
-			// Obtengo la entrada del map con el numero mas grande de votos
-			Map.Entry<String, Integer> me = Collections.max(especiesXcant.entrySet(), Map.Entry.comparingByValue());
-			return me.getKey();
-		}
-	}
-
-	private boolean hayEmpate(Map<String, Integer> opiniones) {
-		// Obtengo el mayor numero de votos del map
-		int maxNumeroVotos = Collections.max(opiniones.values());
-		// Si hay mas de 1 opinion con la mayor cantidad de votos hay empate
-		return opiniones.entrySet().stream().filter(me -> me.getValue() == maxNumeroVotos).count() > 1;
+		return this.getVerificador().resultadoActual();
 	}
 
 	public boolean tieneMenosDe30Dias() {
@@ -149,9 +109,4 @@ public class Muestra {
 	public Ubicacion getUbicacion() {
 		return ubicacion;
 	}
-
-	private Map<String, Integer> getEspeciesXCant() {
-		return especiesXcant;
-	}
-
 }

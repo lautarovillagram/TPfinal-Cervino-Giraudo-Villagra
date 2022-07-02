@@ -5,29 +5,21 @@ public class StateVerificado extends StateVerificacion {
 	private String especieDefinitiva;
 
 	public StateVerificado(String especie) {
-		this.state = "Verificada";
 		this.especieDefinitiva = especie;
 	}
 
-	public String getState() {
-		return this.state;
+	@Override
+	public void agregarOpinion(Opinion o) {
+		System.out.println("Ningun usuario puede opinar sobre muestras verificadas");
 	}
 
 	@Override
-	public String resultadoActual(Muestra muestra) {
+	public String resultadoActual() {
 		return especieDefinitiva;
 	}
-
+	
 	@Override
-	public boolean hayEmpate(Muestra muestra) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean estaVerificada() {
+		return true;
 	}
-
-	@Override
-	public void actualizarVerificacion(Muestra muestra) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

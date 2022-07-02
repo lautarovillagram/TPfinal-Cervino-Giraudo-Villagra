@@ -1,59 +1,52 @@
 package ar.edu.unq.po.tpfinal;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class StateVerificadoParcialmente extends StateVerificacion {
-
-	public StateVerificadoParcialmente() {
-		this.setState("Verificado parcialmente");
+	
+	public StateVerificadoParcialmente(Muestra context) {
+		this.setContext(context);
 	}
 
 	@Override
-	public String resultadoActual(Muestra muestra) {
-		List<Opinion> opiniones = muestra.opinionesDeExpertos();
-		this.setOpinionMasRepetida(opiniones.get(0));
-		for (Opinion opinion : opiniones) {
-			if (this.cantidadDeVecesQueAparece(opinion, opiniones) > this
-					.cantidadDeVecesQueAparece(this.getOpinionMasRepetida(), opiniones)) {
-				this.setOpinionMasRepetida(opinion);
-			}
-
+	public void agregarOpinion(Opinion o) {
+		if (o.getUsuarioOpinador().isExperto() && coincideConAlguna(o.getEspecie())) {
+			this.getContext().getOpiniones().add(o);
+			// Realmente no hace falta agregar la ocurrencia porque el estado cambia
+			this.agregarOcurrenciaEspecieExpertos(o.getEspecie());
+			
+			this.getContext().setVerificador(new StateVerificado(o.getEspecie()));
 		}
-
-		List<Opinion> opinionesSinLaMasRepetida = opiniones.stream()
-				.filter(o -> o.getEspecie() != this.getOpinionMasRepetida().getEspecie()).toList();
-		if (!opinionesSinLaMasRepetida.isEmpty()) {
-
-			this.setOpinionMasRepetida2(opinionesSinLaMasRepetida.get(0));
-			for (Opinion opinion : opiniones) {
-				if (this.cantidadDeVecesQueAparece(opinion, opinionesSinLaMasRepetida) > this
-						.cantidadDeVecesQueAparece(this.getOpinionMasRepetida(), opinionesSinLaMasRepetida)) {
-					this.setOpinionMasRepetida2(opinion);
-				}
-
-			}
-			if (this.hayEmpate(muestra)) {
-				return "No definido";
-			} else {
-				return this.getOpinionMasRepetida().toString();
-			}
+		else if (o.getUsuarioOpinador().isExperto() ) {
+			this.getContext().getOpiniones().add(o);
+			this.agregarOcurrenciaEspecieExpertos(o.getEspecie());
+		}
+		else {
+			//No se agrega la opinion si no es de experto
+			System.out.println("Solo pueden opinar usuarios expertos");
+		}
+	}
+	
+	// Indica si alguna de las opiniones de expertos de la muestra coincide con la especie dada por parametro
+	private boolean coincideConAlguna(String especie) {
+		List<String> especiesOpinionesExpertos = new ArrayList<>();
+		for (Opinion o: this.getContext().opinionesDeExpertos()) {
+			especiesOpinionesExpertos.add(o.getEspecie());
+		}
+		return especiesOpinionesExpertos.stream().anyMatch(e -> e.equals(especie));
+	}
+	
+	@Override
+	public String resultadoActual() {
+		if (this.hayEmpate(this.getEspeciesXCantExpertos())) {
+			return "No definido";
 		} else {
-			return this.getOpinionMasRepetida().toString();
+			// Obtengo la entrada del map con el numero mas grande de votos
+			Map.Entry<String, Integer> me = Collections.max(this.getEspeciesXCantExpertos().entrySet(), Map.Entry.comparingByValue());
+			return me.getKey();
 		}
-
-	}
-
-	@Override
-	public void actualizarVerificacion(Muestra muestra) {
-		if (muestra.getVerificador().coincidenDosExpertos(muestra)) {
-			muestra.setVerificador(new StateVerificado(this.resultadoActual(muestra)));
-		}
-		
-	}
-
-	@Override
-	public boolean hayEmpate(Muestra muestra) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

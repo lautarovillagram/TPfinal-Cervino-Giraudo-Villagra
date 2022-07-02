@@ -1,95 +1,58 @@
 package ar.edu.unq.po.tpfinal;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class StateVerificacion {
-
-	/*
-	 * el state sabe cuales son las dos opiniones con mas votos, ya que es todo lo
-	 * que necesita para determinar si el resultado es no definido o es uno en
-	 * particular
-	 */
-	private Opinion opinionMasRepetida;
-	private Opinion opinionMasRepetida2;
-	public String state;
-
-	public Opinion getOpinionMasRepetida() {
-		return this.opinionMasRepetida;
+	// Contiene a todas las especies y la cantidad de votos que posee cada una
+	private HashMap<String, Integer> especiesXcant = new HashMap<>();
+		
+	// Contiene a todas las especies y la cantidad de votos que posee cada una pero solo se utiliza cuando votan expertos
+	private HashMap<String, Integer> especiesXcantExpertos = new HashMap<>();
+	
+	private Muestra context;
+	
+	public abstract void agregarOpinion(Opinion o);
+	
+	public abstract String resultadoActual();
+	
+	public boolean estaVerificada() {
+		return false;
 	}
-
-	public Opinion getOpinionMasRepetida2() {
-		return this.opinionMasRepetida2;
+	// Agrego una ocurrencia de la especie al map
+	public void agregarOcurrenciaEspecie(String especie) {
+		this.getEspeciesXCant().putIfAbsent(especie, 0);
+		this.getEspeciesXCant().put(especie, this.getEspeciesXCant().get(especie) + 1);
 	}
-
-	public void setOpinionMasRepetida(Opinion opinion) {
-		this.opinionMasRepetida = opinion;
+		
+	// Agrego una ocurrencia de la especie al map de opiniones de expertos
+	public void agregarOcurrenciaEspecieExpertos(String especie) {
+		this.getEspeciesXCantExpertos().putIfAbsent(especie, 0);
+		this.getEspeciesXCantExpertos().put(especie, this.getEspeciesXCantExpertos().get(especie) + 1);
 	}
-
-	public void setOpinionMasRepetida2(Opinion opinion) {
-		this.opinionMasRepetida2 = opinion;
+	
+	public boolean hayEmpate(Map<String, Integer> opiniones) {
+		// Obtengo el mayor numero de votos del map
+		int maxNumeroVotos = Collections.max(opiniones.values());
+		// Si hay mas de 1 opinion con la mayor cantidad de votos hay empate
+		return opiniones.entrySet().stream().filter(me -> me.getValue() == maxNumeroVotos).count() > 1;
 	}
-
-	public String getState() {
-		return state;
+	
+	// Getters y Setters
+	public Muestra getContext() {
+		return context;
 	}
-
-	public void setState(String estado) {
-		this.state = estado;
+	
+	public void setContext(Muestra context) {
+		this.context = context;
 	}
-
-	/*
-	 * retorna un String con el resultado actual de la muestra, cada state tiene un
-	 * comportamiento diferente
-	 */
-
-	public abstract String resultadoActual(Muestra muestra);
-
-	/*
-	 * se utiliza para verificar la muestra cada vez que hay una opinion y cambia el
-	 * state segun corresponda
-	 */
-
-	public abstract void actualizarVerificacion(Muestra muestra);
-
-	/*
-	 * retorna la cantidad de repeticiones que tiene cierta opinion en una lista
-	 * dada
-	 */
-
-	public int cantidadDeVecesQueAparece(Opinion opinion, List<Opinion> list) {
-		return list.stream().filter(o -> o.getEspecie() == opinion.getEspecie()).toList().size();
+	
+	public Map<String, Integer> getEspeciesXCant() {
+		return especiesXcant;
 	}
-
-	public boolean hayEmpate(Muestra muestra) {
-		return muestra.getOpiniones().stream().filter(o -> this.getOpinionMasRepetida().getEspecie() == o.getEspecie())
-				.toList().size() == muestra.getOpiniones().stream()
-						.filter(o -> this.getOpinionMasRepetida2().getEspecie() == o.getEspecie()).toList().size();
-	}
-
-	/*
-	 * retorna si dos expertos comparten una misma opinion en la muestra dada
-	 */
-
-	public boolean coincidenDosExpertos(Muestra muestra) {
-		List<Opinion> opiniones = muestra.opinionesDeExpertos();
-		if (!opiniones.isEmpty()) {
-			this.setOpinionMasRepetida(opiniones.get(0));
-			for (Opinion opinion : opiniones) {
-				if (this.cantidadDeVecesQueAparece(opinion, opiniones) > this
-						.cantidadDeVecesQueAparece(this.getOpinionMasRepetida(), opiniones)) {
-					this.setOpinionMasRepetida(opinion);
-				}
-
-			}
-			if (this.cantidadDeVecesQueAparece(this.getOpinionMasRepetida(), opiniones) == 2) {
-				return true;
-
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-
+	
+	public Map<String, Integer> getEspeciesXCantExpertos() {
+		return especiesXcantExpertos;
 	}
 }
