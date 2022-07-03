@@ -21,6 +21,7 @@ public class MuestraTestCase {
 	private Opinion opinion4;
 	private Opinion opinion5;
 	private Opinion opinion6;
+	private Opinion opinion7;
 	private Sistema sistema;
 
 	@BeforeEach
@@ -45,6 +46,7 @@ public class MuestraTestCase {
 		opinion4 = new Opinion(muestra, u3, LocalDateTime.now(), "Chinche Foliada");
 		opinion5 = new Opinion(muestra, u4, LocalDateTime.now(), "Vinchuca Infestans");
 		opinion6 = new Opinion(muestra, u4, LocalDateTime.now(), "Chinche Foliada");
+		opinion7 = new Opinion(muestra, u4, LocalDateTime.now(), "Phtia-Chinche");
 		sistema.agregarMuestra(muestra);
 	}
 
@@ -55,23 +57,23 @@ public class MuestraTestCase {
 
 	@Test
 	public void testSiUnaMuestraNoTieneOpinionesSuResultadoActualEsIgualAlDadoPorSuUsuarioRecolectador() {
-		assertEquals("Vinchuca Infestans", muestra.resultadoActualv2());
+		assertEquals("Vinchuca Infestans", muestra.resultadoActual());
 	}
 
 	@Test
 	public void testSiHayEmpateEnLasOpinionesDeUnaMuestraElResultadoEsNoDefinido() {
 		sistema.agregarOpinion(opinion1);
-		// sistema.agregarOpinion(opinion2);
+		sistema.agregarOpinion(opinion2);
 
-		assertEquals("No definido", muestra.resultadoActualv2());
+		assertEquals("No definido", muestra.resultadoActual());
 	}
 
 	@Test
 	public void testResultadoActualDevuelveLaEspecieMasVotada() {
 		sistema.agregarOpinion(opinion1);
 		sistema.agregarOpinion(opinion3);
-
-		assertEquals("Vinchuca Infestans", muestra.resultadoActualv2());
+		
+		assertEquals("Vinchuca Infestans", muestra.resultadoActual());
 	}
 
 	@Test
@@ -100,9 +102,9 @@ public class MuestraTestCase {
 
 	@Test
 	public void testLaEspecieOriginalComoResultadoActual() {
-		assertEquals(muestra.getEspecie(), muestra.resultadoActualv2());
+		assertEquals(muestra.getEspecie(), muestra.resultadoActual());
 	}
-
+	
 	@Test
 	public void testUnaMuestraPuedeSaberLaFechaDeSuUltimaVotacion() {
 		LocalDateTime fecha = LocalDateTime.of(2023, 05, 15, 15, 55);
@@ -110,19 +112,52 @@ public class MuestraTestCase {
 
 		Opinion o = mock(Opinion.class);
 		when(o.getFecha()).thenReturn(fecha);
+		when(o.getUsuarioOpinador()).thenReturn(u);
 
 		Opinion o2 = mock(Opinion.class);
 		when(o2.getFecha()).thenReturn(fecha2);
+		when(o2.getUsuarioOpinador()).thenReturn(u2);
 
 		muestra.agregarOpinion(o);
 		muestra.agregarOpinion(o2);
 
 		assertEquals(fecha2, muestra.getFechaUltimaVotacion());
 	}
+	
 
 	@Test
 	public void testUnaMuestraPuedeConocerSuUbicacion() {
 		assertEquals(ubicacion, muestra.getUbicacion());
 	}
-
+	
+	@Test
+	public void testUnaMuestraParcialmenteVerificadaNoRecibeOpinionesDeUsuariosRegulares() {
+		muestra.agregarOpinion(opinion4);
+		muestra.agregarOpinion(opinion1);
+		
+		assertTrue(muestra.getOpiniones().contains(opinion4));
+		assertFalse(muestra.getOpiniones().contains(opinion1));
+	}
+	
+	@Test
+	public void testUnaMuestraParcialmenteVerificadaSoloTieneEnCuentaOpinionesExpertasParaSuResultadoActual() {
+		muestra.agregarOpinion(opinion1); // UsuarioRegular Chinche Foliada
+		muestra.agregarOpinion(opinion3); // UsuarioRegular Vinchuca Infestans
+		
+		muestra.agregarOpinion(opinion7); // UsuarioExperto Phtia-Chinche
+		
+		assertTrue(muestra.resultadoActual().equals("Phtia-Chinche"));
+	}
+	
+	@Test
+	public void testUnaMuestraYaVerificadaNoRecibeOpinionesDeNingunTipo() {
+		muestra.agregarOpinion(opinion4); // UsuarioExperto "Chinche Foliada"
+		muestra.agregarOpinion(opinion6); // UsuarioExperto "Chinche Foliada"
+	
+		muestra.agregarOpinion(opinion3); // UsuarioRegular Vinchuca Infestans
+		muestra.agregarOpinion(opinion7); // UsuarioExperto Phtia-Chinche
+		
+		assertFalse(muestra.getOpiniones().contains(opinion3));
+		assertFalse(muestra.getOpiniones().contains(opinion7));
+	}
 }
