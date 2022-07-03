@@ -3,7 +3,9 @@ package ar.edu.unq.po.tpfinal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Muestra {
@@ -15,6 +17,11 @@ public class Muestra {
 	private List<Opinion> opiniones = new ArrayList<Opinion>();
 	// private List<String> opinionesExpertas = new ArrayList<String>();
 	private StateVerificacion verificador;
+	// Contiene a todas las especies y la cantidad de votos que posee cada una
+	private HashMap<String, Integer> especiesXcant = new HashMap<>();
+	// Contiene a todas las especies y la cantidad de votos que posee cada una pero solo se utiliza cuando votan expertos
+	private HashMap<String, Integer> especiesXcantExpertos = new HashMap<>();
+	
 
 	public Usuario getUsuarioRecolectador() {
 		return usuarioRecolectador;
@@ -97,6 +104,18 @@ public class Muestra {
 	public String resultadoActual() {
 		return this.getVerificador().resultadoActual();
 	}
+	
+	// Agrego una ocurrencia de la especie al map
+	public void agregarOcurrenciaEspecie(String especie) {
+		this.getEspeciesXCant().putIfAbsent(especie, 0);
+		this.getEspeciesXCant().put(especie, this.getEspeciesXCant().get(especie) + 1);
+	}
+			
+	// Agrego una ocurrencia de la especie al map de opiniones de expertos
+	public void agregarOcurrenciaEspecieExpertos(String especie) {
+		this.getEspeciesXCantExpertos().putIfAbsent(especie, 0);
+		this.getEspeciesXCantExpertos().put(especie, this.getEspeciesXCantExpertos().get(especie) + 1);
+	}
 
 	public boolean tieneMenosDe30Dias() {
 		return this.getFecha().isAfter(LocalDateTime.now().minusDays(30));
@@ -108,5 +127,13 @@ public class Muestra {
 
 	public Ubicacion getUbicacion() {
 		return ubicacion;
+	}
+	
+	public Map<String, Integer> getEspeciesXCant() {
+		return especiesXcant;
+	}
+	
+	public Map<String, Integer> getEspeciesXCantExpertos() {
+		return especiesXcantExpertos;
 	}
 }

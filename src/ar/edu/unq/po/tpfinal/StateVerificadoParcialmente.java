@@ -15,14 +15,12 @@ public class StateVerificadoParcialmente extends StateVerificacion {
 	public void agregarOpinion(Opinion o) {
 		if (o.getUsuarioOpinador().isExperto() && coincideConAlguna(o.getEspecie())) {
 			this.getContext().getOpiniones().add(o);
-			// Realmente no hace falta agregar la ocurrencia porque el estado cambia
-			this.agregarOcurrenciaEspecieExpertos(o.getEspecie());
-			
+			this.getContext().agregarOcurrenciaEspecieExpertos(o.getEspecie());
 			this.getContext().setVerificador(new StateVerificado(o.getEspecie()));
 		}
 		else if (o.getUsuarioOpinador().isExperto() ) {
 			this.getContext().getOpiniones().add(o);
-			this.agregarOcurrenciaEspecieExpertos(o.getEspecie());
+			this.getContext().agregarOcurrenciaEspecieExpertos(o.getEspecie());
 		}
 		else {
 			//No se agrega la opinion si no es de experto
@@ -41,11 +39,11 @@ public class StateVerificadoParcialmente extends StateVerificacion {
 	
 	@Override
 	public String resultadoActual() {
-		if (this.hayEmpate(this.getEspeciesXCantExpertos())) {
+		if (this.hayEmpate(this.getContext().getEspeciesXCantExpertos())) {
 			return "No definido";
 		} else {
 			// Obtengo la entrada del map con el numero mas grande de votos
-			Map.Entry<String, Integer> me = Collections.max(this.getEspeciesXCantExpertos().entrySet(), Map.Entry.comparingByValue());
+			Map.Entry<String, Integer> me = Collections.max(this.getContext().getEspeciesXCantExpertos().entrySet(), Map.Entry.comparingByValue());
 			return me.getKey();
 		}
 	}
