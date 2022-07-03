@@ -24,7 +24,7 @@ public class Sistema {
 	// Agrega una muestra al sistema, al buscador y a las zonas que pertenezca
 	public void agregarMuestra(Muestra m) {
 		Especies especies = new Especies();
-		if (especies.getCategorias().contains(m.getEspecie())) {
+		if (especies.esUnaCategoria(m.getEspecie())) {
 			this.getMuestras().add(m);
 			m.getUsuarioRecolectador().agregarMuestraEnviada(m);
 			this.getBuscador().agregarMuestra(m);
@@ -35,10 +35,6 @@ public class Sistema {
 										// agregarla
 			}
 		}
-	}
-
-	public void actualizarStateDeLaMuestra(Muestra muestra) {
-
 	}
 
 	public void agregarOpinion(Opinion o) {

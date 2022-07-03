@@ -52,8 +52,4 @@ public class Buscador {
 	public List<Muestra> getMuestras() {
 		return muestras;
 	}
-
-	public void setMuestras(List<Muestra> muestras) {
-		this.muestras = muestras;
-	}
 }

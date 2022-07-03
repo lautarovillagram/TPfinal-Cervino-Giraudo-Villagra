@@ -1,7 +1,5 @@
 package ar.edu.unq.po.tpfinal;
 
-import java.time.LocalDateTime;
-
 public class UsuarioExperto extends Usuario {
 
 	/*

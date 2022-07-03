@@ -1,8 +1,6 @@
 package ar.edu.unq.po.tpfinal;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Opinion {
 	private Muestra muestraOpinada;
@@ -69,9 +67,4 @@ public class Opinion {
 	public boolean esOpinionValida() {
 		return !(this.getUsuarioOpinador().puedeOpinarEn(muestraOpinada));
 	}
-
-	public String toString() {
-		return this.getEspecie();
-	}
-
 }
